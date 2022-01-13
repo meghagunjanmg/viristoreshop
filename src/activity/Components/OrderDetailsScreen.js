@@ -12,7 +12,7 @@ const OrderDetailsScreen = (props) => {
                 <View key={i} style={{flexDirection: 'row', backgroundColor: '#fff', marginBottom: 10,marginTop: 10, height: 120,width:"95%",marginLeft:"auto",marginRight:"auto"}}>
                     <View style={{flexDirection: 'row', flexGrow: 1, flexShrink: 1, alignSelf: 'center'}}>
                         <TouchableOpacity onPress={() => {/*this.props.navigation.navigate('ProductDetails', {productDetails: item})*/}} style={{padding: 10}}>
-                            <Image source={{uri:'http://shanya.myviristore.com/admin/' +  item.varient_image}} style={[styles.centerElement, {height: 60, width: 60, backgroundColor: '#eeeeee'}]} />
+                            <Image source={{uri:'http://myviristore.com/admin/' +  item.varient_image}} style={[styles.centerElement, {height: 60, width: 60, backgroundColor: '#eeeeee'}]} />
                         </TouchableOpacity>
                         <View style={{flexGrow: 1, flexShrink: 1, alignSelf: 'center'}}>
                             <Text numberOfLines={1} style={{fontSize: 15}}>{item.product_name}</Text>

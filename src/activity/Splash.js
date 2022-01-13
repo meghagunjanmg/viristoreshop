@@ -45,7 +45,7 @@ const Splash = (props) => {
     }
     formBody = formBody.join('&');
 
-    fetch('http://shanya.myviristore.com/admin/api/myprofile', {
+    fetch('http://myviristore.com/admin/api/myprofile', {
       method: 'POST',
       body: formBody,
       headers: {
@@ -76,7 +76,7 @@ const Splash = (props) => {
         redirect: 'follow'
       };
       
-      fetch("http://shanya.myviristore.com/admin/api/notifyby", requestOptions)
+      fetch("http://myviristore.com/admin/api/notifyby", requestOptions)
       .then(response => response.json())
       .then(result => {
         if (result.status === '1') {
@@ -98,7 +98,7 @@ const Splash = (props) => {
         redirect: 'follow'
       };
 
-      fetch("http://shanya.myviristore.com/admin/api/show_address", requestOptions)
+      fetch("http://myviristore.com/admin/api/show_address", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status === '1'){
@@ -112,7 +112,7 @@ const Splash = (props) => {
       
         */
       
-      fetch("http://shanya.myviristore.com/admin/api/currency", {method: 'GET'})
+      fetch("http://myviristore.com/admin/api/currency", {method: 'GET'})
       .then(response => response.json())
       .then(result => {
         console.log('Please check your API.. currency ' + result);

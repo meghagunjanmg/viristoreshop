@@ -150,7 +150,7 @@ const Signin = (props) => {
     }
     formBody = formBody.join('&');
 
-    await fetch('http://shanya.myviristore.com/admin/api/login', {
+    await fetch('http://myviristore.com/admin/api/login', {
       method: 'POST',
       body: formBody,
       headers: {
@@ -192,7 +192,7 @@ const Signin = (props) => {
         redirect: 'follow'
       };
       
-      fetch("http://shanya.myviristore.com/admin/api/notifyby", requestOptions)
+      fetch("http://myviristore.com/admin/api/notifyby", requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log("notify by data:-"+result.data)
@@ -211,7 +211,7 @@ const Signin = (props) => {
         redirect: 'follow'
       };
 
-      fetch("http://shanya.myviristore.com/admin/api/show_address", requestOptions)
+      fetch("http://myviristore.com/admin/api/show_address", requestOptions)
         .then(response => response.json())
         .then(result => {
           _storeData("addressDetails", JSON.stringify(result.data));
@@ -220,7 +220,7 @@ const Signin = (props) => {
         .catch(error => console.log('error', error));
       
       */
-      fetch("http://shanya.myviristore.com/admin/api/currency", {method: 'GET'})
+      fetch("http://myviristore.com/admin/api/currency", {method: 'GET'})
       .then(response => response.json())
       .then(result => {
         props.getCurrency(result.data.currency_name, result.data.currency_sign);

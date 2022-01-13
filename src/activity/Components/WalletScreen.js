@@ -90,7 +90,7 @@ const handlePayNowButton = () =>{
         redirect: 'follow'
       };
   
-      fetch("http://shanya.myviristore.com/admin/api/stripe_api", requestOptions)
+      fetch("http://myviristore.com/admin/api/stripe_api", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result.status);
@@ -123,7 +123,7 @@ const handleCheckOutAPI = (method, status) => {
     redirect: 'follow'
   };
 
-  fetch("http://shanya.myviristore.com/admin/api/recharge_wallet", requestOptions)
+  fetch("http://myviristore.com/admin/api/recharge_wallet", requestOptions)
     .then(response => response.json())
     .then(result => {
       console.log(result)
@@ -138,7 +138,7 @@ const handleCheckOutAPI = (method, status) => {
           redirect: 'follow'
         };
 
-        fetch("http://shanya.myviristore.com/admin/api/walletamount", requestOptions)
+        fetch("http://myviristore.com/admin/api/walletamount", requestOptions)
           .then(response => response.json())
           .then(result => {
             var newuserdata = props.item.userdata;

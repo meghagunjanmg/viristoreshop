@@ -39,7 +39,7 @@ const OrderScreen = (props) => {
         redirect: 'follow'
       };
   
-      await fetch("http://shanya.myviristore.com/admin/api/ongoing_orders", requestOptions)
+      await fetch("http://myviristore.com/admin/api/ongoing_orders", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result);
@@ -55,7 +55,7 @@ const OrderScreen = (props) => {
         })
         .catch(error => console.log('error', error));
       
-      await fetch("http://shanya.myviristore.com/admin/api/completed_orders", requestOptions)
+      await fetch("http://myviristore.com/admin/api/completed_orders", requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result.length);

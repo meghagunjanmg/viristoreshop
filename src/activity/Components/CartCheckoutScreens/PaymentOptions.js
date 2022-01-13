@@ -47,7 +47,7 @@ const PaymentOptions = (props) =>
           redirect: 'follow'
         };
 
-        fetch("http://shanya.myviristore.com/admin/api/redeem_rewards", requestOptions)
+        fetch("http://myviristore.com/admin/api/redeem_rewards", requestOptions)
           .then(response => response.json())
           .then(async result => {
               console.log(result)
@@ -73,7 +73,7 @@ const PaymentOptions = (props) =>
           redirect: 'follow'
         };
 
-        fetch("http://shanya.myviristore.com/admin/api/couponlist", requestOptions)
+        fetch("http://myviristore.com/admin/api/couponlist", requestOptions)
           .then(response => response.json())
           .then(async result => {
               console.log(result);
@@ -100,7 +100,7 @@ const PaymentOptions = (props) =>
           redirect: 'follow'
         };
 
-        fetch("http://shanya.myviristore.com/admin/api/apply_coupon", requestOptions)
+        fetch("http://myviristore.com/admin/api/apply_coupon", requestOptions)
           .then(response => response.json())
           .then(async result => {
               console.log(result.data.coupon_discount)
@@ -143,7 +143,7 @@ const PaymentOptions = (props) =>
 
     const _getPaymentMethod = async () => {
         let response = await fetch(
-            'http://shanya.myviristore.com/admin/api/pymnt_via'
+            'http://myviristore.com/admin/api/pymnt_via'
         );
         let json = await response.json();
         let paymentData = json.data;
@@ -253,7 +253,7 @@ const PaymentOptions = (props) =>
         };
 
         console.log(requestOptions);
-        fetch("http://shanya.myviristore.com/admin/api/make_an_order", requestOptions)
+        fetch("http://myviristore.com/admin/api/make_an_order", requestOptions)
           .then(response => response.json())
           .then(async (result) => {
         
@@ -287,7 +287,7 @@ const PaymentOptions = (props) =>
           redirect: 'follow'
         };
         
-        fetch("http://shanya.myviristore.com/admin/api/rewardlines", requestOptions)
+        fetch("http://myviristore.com/admin/api/rewardlines", requestOptions)
           .then(response => response.json())
           .then(result =>{ 
             //   console.log("Reward Lines data is:-"+result)
@@ -364,7 +364,7 @@ const PaymentOptions = (props) =>
               redirect: 'follow'
             };
         
-            fetch("http://shanya.myviristore.com/admin/api/stripe_api", requestOptions)
+            fetch("http://myviristore.com/admin/api/stripe_api", requestOptions)
               .then(response => response.json())
               .then(result => {
                 console.log(result.status);
@@ -419,7 +419,7 @@ const PaymentOptions = (props) =>
           redirect: 'follow'
         };
     
-        fetch("http://shanya.myviristore.com/admin/api/checkout", requestOptions)
+        fetch("http://myviristore.com/admin/api/checkout", requestOptions)
           .then(response => response.json())
           .then(result => {
              console.log("The checkout formdata is:-"+JSON.stringify(formdata));

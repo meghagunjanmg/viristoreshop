@@ -44,7 +44,7 @@ const DemoScreen = (props) => {
       const getCurrency= () => 
 {
 
-  fetch("http://shanya.myviristore.com/admin/api/currency", {method: 'GET'})
+  fetch("http://myviristore.com/admin/api/currency", {method: 'GET'})
   .then(response => response.json())
   .then(async result => {
     if (result.status === '1'){
@@ -84,7 +84,7 @@ const DemoScreen = (props) => {
         }
         formBody = formBody.join('&');
     
-        fetch('http://shanya.myviristore.com/admin/api/myprofile', {
+        fetch('http://myviristore.com/admin/api/myprofile', {
           method: 'POST',
           body: formBody,
           headers: {
@@ -118,7 +118,7 @@ const DemoScreen = (props) => {
             redirect: 'follow'
           };
           
-          fetch("http://shanya.myviristore.com/admin/api/notifyby", requestOptionsfornoti)
+          fetch("http://myviristore.com/admin/api/notifyby", requestOptionsfornoti)
           .then(response => response.json())
           .then(result => {
             console.log("the response of notifiby is "+ JSON.stringify(result))
@@ -141,7 +141,7 @@ const DemoScreen = (props) => {
             redirect: 'follow'
           };
     
-          fetch("http://shanya.myviristore.com/admin/api/show_address", requestOptions)
+          fetch("http://myviristore.com/admin/api/show_address", requestOptions)
             .then(response => response.json())
             .then(result => {
               if (result.status === '1'){

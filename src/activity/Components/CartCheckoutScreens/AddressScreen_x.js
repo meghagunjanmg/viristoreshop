@@ -17,7 +17,7 @@ const AddressScreen_x = (props) => {
     redirect: 'follow'
   };
   
-  fetch("http://shanya.myviristore.com/admin/api/show_address", requestOptions)
+  fetch("http://myviristore.com/admin/api/show_address", requestOptions)
   .then(response => response.json())
   .then(result => {
     if (result.status === '1'){
@@ -47,7 +47,7 @@ const AddressScreen_x = (props) => {
           redirect: 'follow'
         };
 
-        fetch("http://shanya.myviristore.com/admin/api/select_address", requestOptions)
+        fetch("http://myviristore.com/admin/api/select_address", requestOptions)
           .then(response => response.json())
           .then(async result => {
               console.log(result)
@@ -79,7 +79,7 @@ const AddressScreen_x = (props) => {
         redirect: 'follow'
       };
 
-      fetch("http://shanya.myviristore.com/admin/api/remove_address", requestOptions)
+      fetch("http://myviristore.com/admin/api/remove_address", requestOptions)
         .then(response => response.json())
         .then(async result => {
             console.log(result)
@@ -107,7 +107,7 @@ const AddressScreen_x = (props) => {
           redirect: 'follow'
         };
         
-        fetch("http://shanya.myviristore.com/admin/api/show_address", requestOptions)
+        fetch("http://myviristore.com/admin/api/show_address", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status === '1'){

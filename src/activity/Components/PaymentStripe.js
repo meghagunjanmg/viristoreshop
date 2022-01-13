@@ -101,7 +101,7 @@ const subtotalPrice = () => {
       redirect: 'follow'
     };
 
-    fetch("http://shanya.myviristore.com/admin/api/stripe_api", requestOptions)
+    fetch("http://myviristore.com/admin/api/stripe_api", requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result.status);
@@ -135,7 +135,7 @@ const subtotalPrice = () => {
       redirect: 'follow'
     };
 
-    fetch("http://shanya.myviristore.com/admin/api/checkout", requestOptions)
+    fetch("http://myviristore.com/admin/api/checkout", requestOptions)
       .then(response => response.json())
       .then(result => {
         console.log(result.status);

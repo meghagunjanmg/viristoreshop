@@ -53,7 +53,7 @@ const AddAddressScreen = (props) => {
         var url;
         var dataToSend;
         if(props.route.params.selectedAddress != ""){
-            url = 'http://shanya.myviristore.com/admin/api/edit_address';
+            url = 'http://myviristore.com/admin/api/edit_address';
 
             dataToSend = {address_id: props.route.params.selectedAddress.address_id, 
                 user_id: props.item.userdata.user_id, receiver_name: name,
@@ -64,7 +64,7 @@ const AddAddressScreen = (props) => {
                 lat: props.item.latitude, lng: props.item.longitude};
 
         }else{
-            url = 'http://shanya.myviristore.com/admin/api/add_address'
+            url = 'http://myviristore.com/admin/api/add_address'
 
             dataToSend = {user_id: props.item.userdata.user_id, receiver_name: name,
                 receiver_phone: phoneNumber,
@@ -126,7 +126,7 @@ const AddAddressScreen = (props) => {
                   body: formdata1,
                   redirect: 'follow'
                 };
-                fetch("http://shanya.myviristore.com/admin/api/show_address", requestOptions)
+                fetch("http://myviristore.com/admin/api/show_address", requestOptions)
                   .then(response => response.json())
                   .then(result => {
                     changeAddressData(result.data);

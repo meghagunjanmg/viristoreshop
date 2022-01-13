@@ -21,7 +21,7 @@ const CartScreen = () => {
       redirect: 'follow'
     };
     
-    fetch("http://shanya.myviristore.com/admin/api/appaboutus", requestOptions)
+    fetch("http://myviristore.com/admin/api/appaboutus", requestOptions)
       .then(response => response.json())
       .then(result => setData(result.data))
       .catch(error => console.log('error', error));

@@ -58,7 +58,7 @@ const ExpandableComponent = ({item, onClickFunction,navigation,propValues}) => {
             onPress={ () => show_Selected_Category(items,propValues.latitude,propValues.longitude)}>
               <View style={{flexDirection:"row",borderBottomWidth:1,borderBottomColor:"grey"}}>
                 <Text style={[styles.text,{flex:3,alignSelf:"flex-end"}]}>{items.title} </Text>
-                <Image style={{flex:1,width:50,height:50,marginBottom:5,borderRadius:10}} source={{uri:'http://shanya.myviristore.com/admin/' + items.image}}/> 
+                <Image style={{flex:1,width:50,height:50,marginBottom:5,borderRadius:10}} source={{uri:'http://myviristore.com/admin/' + items.image}}/> 
               </View>
           </TouchableOpacity>
         ))}
@@ -82,7 +82,7 @@ const CategoryScreen = (props) => {
 
   const _getCategoriesList = async () => {
     let response = await fetch(
-      'http://shanya.myviristore.com/admin/api/catee'
+      'http://myviristore.com/admin/api/catee'
     );
     let json = await response.json();
     let categoryResponseData = json.data;

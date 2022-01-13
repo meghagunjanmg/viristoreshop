@@ -21,7 +21,7 @@ const OrderCancelPage = (props) => {
             redirect: 'follow'
           };
           
-          fetch("http://shanya.myviristore.com/admin/api/cancelling_reasons", requestOptions)
+          fetch("http://myviristore.com/admin/api/cancelling_reasons", requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result)
@@ -58,7 +58,7 @@ const OrderCancelPage = (props) => {
           redirect: 'follow'
         };
 
-        fetch("http://shanya.myviristore.com/admin/api/delete_order", requestOptions)
+        fetch("http://myviristore.com/admin/api/delete_order", requestOptions)
           .then(response => response.text())
           .then(result => console.log(result))
           .catch(error => console.log('error', error));

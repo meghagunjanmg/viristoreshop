@@ -193,7 +193,7 @@ const Homescreen = (props) => {
     }
     formBody = formBody.join('&');
 
-    fetch('http://shanya.myviristore.com/admin/api/myprofile', {
+    fetch('http://myviristore.com/admin/api/myprofile', {
       method: 'POST',
       body: formBody,
       headers: {
@@ -225,7 +225,7 @@ const Homescreen = (props) => {
         redirect: 'follow'
       };
       
-      fetch("http://shanya.myviristore.com/admin/api/notifyby", requestOptions)
+      fetch("http://myviristore.com/admin/api/notifyby", requestOptions)
       .then(response => response.json())
       .then(result => {
         if (result.status === '1') {
@@ -238,7 +238,7 @@ const Homescreen = (props) => {
       .catch(error => console.log('error', error));
       
       
-      fetch("http://shanya.myviristore.com/admin/api/currency", {method: 'GET'})
+      fetch("http://myviristore.com/admin/api/currency", {method: 'GET'})
       .then(response => response.json())
       .then(result => {
         if (result.status === '1'){
@@ -283,7 +283,7 @@ const Homescreen = (props) => {
     }
     formBody = formBody.join('&');
 
-    fetch('http://shanya.myviristore.com/admin/api/homepage', {
+    fetch('http://myviristore.com/admin/api/homepage', {
       method: 'POST',
       body: formBody,
       headers: {
@@ -374,7 +374,7 @@ const Homescreen = (props) => {
             redirect: 'follow'
           };
 
-          fetch("http://shanya.myviristore.com/admin/api/delivery_info", requestOptions)
+          fetch("http://myviristore.com/admin/api/delivery_info", requestOptions)
             .then(response => response.json())
             .then(result => props.getDeliveryData(result.data))
             .catch(error => console.log('error', error));
@@ -406,7 +406,7 @@ const Homescreen = (props) => {
           }
           formBody = formBody.join('&');
     
-          fetch('http://shanya.myviristore.com/admin/api/cat_product', {
+          fetch('http://myviristore.com/admin/api/cat_product', {
             method: 'POST',
             body: formBody,
             headers: {
@@ -550,7 +550,7 @@ const Homescreen = (props) => {
                                   <View style={{flex: 1}}>
                                       <Image
                                         source={{
-                                          uri:'http://shanya.myviristore.com/admin/' + productData.product_image,
+                                          uri:'http://myviristore.com/admin/' + productData.product_image,
                                         }}
                                         style={styles.trendingImageStyle}
                                       />
@@ -656,7 +656,7 @@ const Homescreen = (props) => {
                   //   }}
                   // >
                   //     <View style={{flexDirection:"column",overflow:"hidden",width:80,justifyContent:"center",backgroundColor:"white",height:"95%",marginLeft:3,marginRight:3,marginTop:2,borderRadius:10}}>
-                  //       <Image style={{flex:2,width:50,height:50,borderRadius:50,alignSelf:"center",marginTop:5}} source={{uri:'http://shanya.myviristore.com/admin/' + topCategory.image}}/> 
+                  //       <Image style={{flex:2,width:50,height:50,borderRadius:50,alignSelf:"center",marginTop:5}} source={{uri:'http://myviristore.com/admin/' + topCategory.image}}/> 
                   //       <Text key={topCategory.title} style={{flex:1,textAlign:"center",fontSize:8,marginTop:5,fontWeight:"bold",color:"#238A02"}}>{topCategory.title}</Text>
                   //     </View>
                   // </TouchableOpacity>
@@ -687,7 +687,7 @@ const Homescreen = (props) => {
                 {banner1.map(bannerPhoto => (
                   <Image key={bannerPhoto.banner_id} source={{
                     //banner: bannerPhoto.banner_image,
-                    uri:"http://shanya.myviristore.com/admin/"+ bannerPhoto.banner_image,
+                    uri:"http://myviristore.com/admin/"+ bannerPhoto.banner_image,
                     }}
                     style={styles.imageStyle}
                   />
@@ -731,7 +731,7 @@ const Homescreen = (props) => {
                                             <Image
                                               source={{
                                                 uri:
-                                                  'http://shanya.myviristore.com/admin/' + trendingItem.product_image,
+                                                  'http://myviristore.com/admin/' + trendingItem.product_image,
                                               }}
                                               style={[styles.trendingImageStyle]}
                                             />
@@ -803,7 +803,7 @@ const Homescreen = (props) => {
                                         <Image
                                           source={{
                                             uri:
-                                            'http://shanya.myviristore.com/admin/' + featuredItem.product_image,
+                                            'http://myviristore.com/admin/' + featuredItem.product_image,
                                           }}
                                           style={styles.trendingImageStyle}
                                         />
@@ -868,7 +868,7 @@ const Homescreen = (props) => {
                                       <Image
                                         source={{
                                           uri:
-                                          'http://shanya.myviristore.com/admin/' + recommendedItem.product_image,
+                                          'http://myviristore.com/admin/' + recommendedItem.product_image,
                                         }}
                                         style={styles.trendingImageStyle}
                                       />
@@ -928,7 +928,7 @@ const Homescreen = (props) => {
                 {banner2.map(bannerPhoto2 => (
                   <Image key={bannerPhoto2.sec_banner_id} source={{
                     //banner: bannerPhoto.banner_image,
-                    uri:"http://shanya.myviristore.com/admin/"+ bannerPhoto2.banner_image,
+                    uri:"http://myviristore.com/admin/"+ bannerPhoto2.banner_image,
                     }}
                     style={[styles.imageStyle]}
                   />

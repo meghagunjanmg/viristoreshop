@@ -71,7 +71,7 @@ const ProfileScren = (props) => {
       redirect: 'follow'
     };
     
-     await fetch("http://shanya.myviristore.com/admin/api/profile_edit", requestOptions)
+     await fetch("http://myviristore.com/admin/api/profile_edit", requestOptions)
       .then(response => response.json())
       .then( async (result) => {
         const temp = props.item.userdata;
@@ -117,7 +117,7 @@ const ProfileScren = (props) => {
       redirect: 'follow'
     };
 
-    fetch("http://shanya.myviristore.com/admin/api/updatenotifyby", requestOptions)
+    fetch("http://myviristore.com/admin/api/updatenotifyby", requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result)

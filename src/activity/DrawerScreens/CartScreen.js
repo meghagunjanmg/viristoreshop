@@ -56,7 +56,7 @@ const Cart = (props) => {
         redirect: 'follow'
       };
 
-      fetch("http://shanya.myviristore.com/admin/api/show_address", requestOptions)
+      fetch("http://myviristore.com/admin/api/show_address", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.status === '1'){
@@ -156,7 +156,7 @@ const Cart = (props) => {
         redirect: 'follow'
       };
       
-      await fetch("http://shanya.myviristore.com/admin/api/timeslot", requestOptions)
+      await fetch("http://myviristore.com/admin/api/timeslot", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result);
@@ -222,7 +222,7 @@ const Cart = (props) => {
 								<View style={{flex:3}}>
                   <View style={{flexDirection:"row"}}>
 								  	<TouchableOpacity onPress={() => {/*this.props.navigation.navigate('ProductDetails', {productDetails: item})*/}} style={{padding: 10,flex: 1,}}>
-								  		<Image source={{uri: 'http://shanya.myviristore.com/admin/' + item.product_image}} style={{height:80,width:80}}/>
+								  		<Image source={{uri: 'http://myviristore.com/admin/' + item.product_image}} style={{height:80,width:80}}/>
 								  	</TouchableOpacity>
 								  	<View style={{alignSelf: 'center',flex: 3,marginLeft:20}}>
 								  		<Text  >{item.product_name}</Text>

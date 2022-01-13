@@ -76,7 +76,7 @@ const Signup = ({ navigation }) => {
       redirect: 'follow'
     };
 
-    fetch("http://shanya.myviristore.com/admin/api/signup", requestOptions)
+    fetch("http://myviristore.com/admin/api/signup", requestOptions)
       .then(response => response.json())
       .then(result => 
         {

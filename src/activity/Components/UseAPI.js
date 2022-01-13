@@ -6,7 +6,7 @@ const UseAPI = (path, requestBodywithHeaders) => {
 
   const makeRequest = useCallback(() => {
       setLoading(true);
-      fetch('http://shanya.myviristore.com/admin/api/'+ path, requestBodywithHeaders)
+      fetch('http://myviristore.com/admin/api/'+ path, requestBodywithHeaders)
         .then((res) => res.json())
         .then((data) => setData(res))
         .catch(() => {})

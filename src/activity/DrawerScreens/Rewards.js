@@ -28,7 +28,7 @@ const Rewards = (props) => {
           redirect: 'follow'
         };
 
-        fetch("http://shanya.myviristore.com/admin/api/redeem_rewards", requestOptions)
+        fetch("http://myviristore.com/admin/api/redeem_rewards", requestOptions)
           .then(response => response.json())
           .then(async result => {
               console.log(result)
@@ -49,7 +49,7 @@ const Rewards = (props) => {
         redirect: 'follow'
       };
 
-      fetch("http://shanya.myviristore.com/admin/api/myprofile", requestOptions)
+      fetch("http://myviristore.com/admin/api/myprofile", requestOptions)
         .then(response => response.json())
         .then(async result => {
           console.log(result)
