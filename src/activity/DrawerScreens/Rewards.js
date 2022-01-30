@@ -10,6 +10,8 @@ import Loader from "../Components/Loader";
 
 const Rewards = (props) => {
     const [loading, setLoading] = useState(false);
+    const [reward, setReward] = useState(props.item.userdata.rewards);
+
     const [modalVisible1, setModalVisible1] = useState(false);
     const [modalVisible2, setModalVisible2] = useState(false);
     const [modalVisible3, setModalVisible3] = useState(false);
@@ -18,6 +20,7 @@ const Rewards = (props) => {
     const [showCard3,setShowCard3] = useState(false);
 
     const redeemRewards = () =>{
+
         setLoading(true);
         var formdata = new FormData();
         formdata.append("user_id", props.item.userdata.user_id);
@@ -34,6 +37,7 @@ const Rewards = (props) => {
               console.log(result)
               await Toast.show(result.message);
               await updateWallet();
+              setReward("0")
               setLoading(false)
           })
           .catch(error => console.log('error', error));
@@ -41,7 +45,7 @@ const Rewards = (props) => {
 
     const updateWallet = () => {
       var formdata = new FormData();
-      formdata.append("user_id", "1");
+      formdata.append("user_id",props.item.userdata.user_id );
 
       var requestOptions = {
         method: 'POST',
@@ -66,7 +70,7 @@ const Rewards = (props) => {
                 <View>
                     <ImageBackground source={require('../../../assets/cardbg.png')} style={styles.image}>
                         <Text style={styles.text}>Total Crystal</Text>
-                        <Text style={styles.text}>{props.item.userdata.rewards?props.item.userdata.rewards:"0"}</Text>
+                        <Text style={styles.text}>{reward}</Text>
                     </ImageBackground>
                 </View>
                 <View style={styles.achieve}>
@@ -80,8 +84,8 @@ const Rewards = (props) => {
                       onPress={() => setModalVisible1(!modalVisible1)}
                       style={[styles.rewardsSection, {marginLeft: 50,backgroundColor:"white"}]}>
                       <Text style={[styles.gemsstyle,{fontWeight:"bold"}]}>Early Starter</Text>
-                      <FontAwesome style={styles.gemsstyleIcon,{backgroundColor:"white",alignSelf:"center",marginTop:5,marginBottom:5}} name="diamond" color="#238A02" size={20} />
-                      <Text style={styles.gemsstyle}><Text style={{color:"#238A02",fontWeight:"bold"}}>100</Text> Crystal</Text>
+                      <FontAwesome style={styles.gemsstyleIcon,{backgroundColor:"white",alignSelf:"center",marginTop:5,marginBottom:5}} name="diamond" color="#f2a900" size={20} />
+                      <Text style={styles.gemsstyle}><Text style={{color:"#f2a900",fontWeight:"bold"}}>100</Text> Crystal</Text>
                     </TouchableOpacity>:
                     <TouchableOpacity 
                       onPress={() => setModalVisible1(!modalVisible1)}
@@ -120,8 +124,8 @@ const Rewards = (props) => {
                         onPress={() => setModalVisible2(!modalVisible2)}
                         style={[styles.rewardsSection , {backgroundColor:"white"}]}>
                         <Text style={[styles.gemsstyle,{fontWeight:"bold"}]}>Sparking Star</Text>
-                        <FontAwesome style={[styles.gemsstyleIcon,{marginTop:5,marginBottom:5,backgroundColor:"white"}]} name="diamond" color="#238A02" size={20} />
-                        <Text style={styles.gemsstyle}><Text style={{color:"#238A02",fontWeight:"bold"}}>500</Text> Crystal</Text>
+                        <FontAwesome style={[styles.gemsstyleIcon,{marginTop:5,marginBottom:5,backgroundColor:"white"}]} name="diamond" color="#f2a900" size={20} />
+                        <Text style={styles.gemsstyle}><Text style={{color:"#f2a900",fontWeight:"bold"}}>500</Text> Crystal</Text>
                     </TouchableOpacity>:
                     <TouchableOpacity 
                       onPress={() => setModalVisible2(!modalVisible2)}
@@ -162,8 +166,8 @@ const Rewards = (props) => {
                         onPress={() => setModalVisible3(!modalVisible3)}
                         style={[styles.rewardsSection, {marginLeft: 50,backgroundColor:"white"}]}>
                         <Text style={[styles.gemsstyle,{fontWeight:"bold"}]}>Hidden Gem</Text>
-                        <FontAwesome style={[styles.gemsstyleIcon,{marginTop:5,marginBottom:5,backgroundColor:"white"}]} name="diamond" color="#238A02" size={20} />
-                        <Text style={styles.gemsstyle}><Text style={{color:"#238A02",fontWeight:"bold"}}>1000</Text> Crystal</Text>
+                        <FontAwesome style={[styles.gemsstyleIcon,{marginTop:5,marginBottom:5,backgroundColor:"white"}]} name="diamond" color="#f2a900" size={20} />
+                        <Text style={styles.gemsstyle}><Text style={{color:"#f2a900",fontWeight:"bold"}}>1000</Text> Crystal</Text>
                     </TouchableOpacity>:
                     <TouchableOpacity 
                         onPress={() => setModalVisible3(!modalVisible3)}
@@ -270,7 +274,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     buttonStyle: {
-        backgroundColor: '#238A02',
+        backgroundColor: '#f2a900',
         borderWidth: 0,
         color: '#FFFFFF',
         borderColor: '#7DE24E',
@@ -325,7 +329,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F194FF",
       },
       buttonClose: {
-        backgroundColor: "#238A02",
+        backgroundColor: "#f2a900",
       },
       textStyle: {
         color: "white",

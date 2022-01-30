@@ -226,7 +226,7 @@ const AddtoCartPage = (props) => {
                             <Text style={{textDecorationLine: 'line-through'}}>{selectedProductVarients.mrp}</Text>
 
                         </View>
-                        <View style={{flexDirection: 'row', position: "absolute", right: 0, borderColor: '#238A02', borderRadius: 7, borderWidth: 1,}}>
+                        <View style={{flexDirection: 'row', position: "absolute", right: 0, borderColor: '#f2a900', borderRadius: 7, borderWidth: 1,}}>
                             {
                                 selectedProductData.qty === 0 || selectedProductData.qty === undefined || selectedProductData.qty === null ?
                                 <TouchableOpacity 
@@ -272,8 +272,8 @@ const AddtoCartPage = (props) => {
                     </View>
 
                     <View style={{flexDirection: 'row',paddingTop:10, paddingBottom: 20, alignItems: 'center', borderTopColor:"#C8C8C8",borderTopWidth:1,borderBottomColor:"#C8C8C8",borderBottomWidth:1,width:"95%",marginLeft:"auto",marginRight:"auto"}}>
-                        <Text style={{fontWeight: 'bold',flex:10, color: "#238A02"}}>SubTotal: </Text>
-                        <Text style={{margin: 5,flex:2,fontWeight: 'bold', color: "#238A02",textAlign:"right"}}>{props.item.currency_sign} {subTotalPrice()}</Text>
+                        <Text style={{fontWeight: 'bold',flex:10, color: "#f2a900"}}>SubTotal: </Text>
+                        <Text style={{margin: 5,flex:2,fontWeight: 'bold', color: "#f2a900",textAlign:"right"}}>{props.item.currency_sign} {subTotalPrice()}</Text>
                     </View>
                 </View>
 
@@ -330,14 +330,14 @@ const styles = StyleSheet.create({
         height: 30,
         margin: 5,
         position: "absolute",
-        backgroundColor: '#238A02',
+        backgroundColor: '#f2a900',
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center",
         borderRadius: 7,
     },
     cartButton:  {
-        backgroundColor: '#238A02',
+        backgroundColor: '#f2a900',
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center",

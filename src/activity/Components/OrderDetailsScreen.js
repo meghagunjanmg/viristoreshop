@@ -72,7 +72,7 @@ const OrderDetailsScreen = (props) => {
       textAlign: 'center',
     },
     rechargebutton: {
-      backgroundColor: '#238A02',
+      backgroundColor: '#f2a900',
       borderWidth: 0,
       color: '#FFFFFF',
       borderColor: '#7DE24E',
@@ -96,7 +96,7 @@ const OrderDetailsScreen = (props) => {
       width: 30,
       height: 30,
       margin: 5,
-      backgroundColor: '#238A02',
+      backgroundColor: '#f2a900',
       justifyContent: "center",
       alignItems: "center",
       textAlign: "center",

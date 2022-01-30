@@ -22,6 +22,8 @@ import RewardsScreen from "./DrawerScreens/RewardsScreen";
 import Rewards from "./DrawerScreens/Rewards";
 import CartScreen from "./DrawerScreens/CartScreen";
 import AboutUsScreen from "./DrawerScreens/AboutusScreen";
+import NotificationsView from "./DrawerScreens/NotificationsView";
+
 import ProfileScreen from "./DrawerScreens/ProfileScreen";
 import TermsConditionScreen from "./DrawerScreens/TermsConditionScreen";
 import NavigationDrawerHeader from '../activity/Components/NavigationDrawerHeader';
@@ -31,6 +33,8 @@ const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 var customTitle = "Welcome !!";
+var user_id = "0";
+
 
 const CartStackNavigator = (props) => {
     return (
@@ -46,12 +50,24 @@ const CartStackNavigator = (props) => {
                 </TouchableOpacity>
               ),
               headerRight: () => ( 
-                <TouchableOpacity onPress={() => props.navigation.navigate("ProfileScreen")}>
+                <TouchableOpacity onPress={() => 
+                  {
+                    if(user_id=="0")
+                    {
+                      props.navigation.navigate("Auth");
+                    }
+                    else
+                    {
+                      props.navigation.navigate("ProfileScreen")
+                    }
+                  }
+                ///props.navigation.navigate("ProfileScreen")
+                }>
                     <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
                 </TouchableOpacity>
               ), //Set Header right icon
               headerStyle: {
-                backgroundColor: '#238A02', //Set Header color
+                backgroundColor: '#f2a900', //Set Header color
               },
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
@@ -78,12 +94,24 @@ const RewardsStackNavigator = ({navigation}) => {
                 </TouchableOpacity>
               ),
               headerRight: () => ( 
-                <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
+                <TouchableOpacity onPress={() => 
+                  {
+                    if(user_id=="0")
+                    {
+                      props.navigation.navigate("Auth");
+                    }
+                    else
+                    {
+                      props.navigation.navigate("ProfileScreen")
+                    }
+                  }
+                ///props.navigation.navigate("ProfileScreen")
+                }>
                     <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
                 </TouchableOpacity>
               ), //Set Header right icon
               headerStyle: {
-                backgroundColor: '#238A02', //Set Header color
+                backgroundColor: '#f2a900', //Set Header color
               },
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
@@ -109,12 +137,24 @@ const RewardStackNavigator = (props) => {
               </TouchableOpacity>
             ),
             headerRight: () => ( 
-              <TouchableOpacity onPress={() => props.navigation.navigate("ProfileScreen")}>
+              <TouchableOpacity onPress={() => 
+                {
+                  if(user_id=="0")
+                  {
+                    props.navigation.navigate("Auth");
+                  }
+                  else
+                  {
+                    props.navigation.navigate("ProfileScreen")
+                  }
+                }
+              ///props.navigation.navigate("ProfileScreen")
+              }>
                   <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
               </TouchableOpacity>
             ), //Set Header right icon
             headerStyle: {
-              backgroundColor: '#238A02', //Set Header color
+              backgroundColor: '#f2a900', //Set Header color
             },
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
@@ -140,12 +180,24 @@ const SearchStackNavigator = (props) => {
                 </TouchableOpacity>
               ),
               headerRight: () => ( 
-                <TouchableOpacity onPress={() => props.navigation.navigate("ProfileScreen")}>
+                <TouchableOpacity onPress={() => 
+                  {
+                    if(user_id=="0")
+                    {
+                      props.navigation.navigate("Auth");
+                    }
+                    else
+                    {
+                      props.navigation.navigate("ProfileScreen")
+                    }
+                  }
+                ///props.navigation.navigate("ProfileScreen")
+                }>
                     <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
                 </TouchableOpacity>
               ), //Set Header right icon
               headerStyle: {
-                backgroundColor: '#238A02', //Set Header color
+                backgroundColor: '#f2a900', //Set Header color
               },
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
@@ -172,12 +224,24 @@ const MainStackNavigator = (props) => {
                 </TouchableOpacity>
               ),
               headerRight: () => ( 
-                <TouchableOpacity onPress={() => props.navigation.navigate("ProfileScreen")}>
+                <TouchableOpacity onPress={() => 
+                  {
+                    if(user_id=="0")
+                    {
+                      props.navigation.navigate("Auth");
+                    }
+                    else
+                    {
+                      props.navigation.navigate("ProfileScreen")
+                    }
+                  }
+                ///props.navigation.navigate("ProfileScreen")
+                }>
                     <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
                 </TouchableOpacity>
               ), //Set Header right icon
               headerStyle: {
-                backgroundColor: '#238A02', //Set Header color
+                backgroundColor: '#f2a900', //Set Header color
               },
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
@@ -203,12 +267,24 @@ const MainStackNavigator = (props) => {
                   </TouchableOpacity>
                 ),
                 headerRight: () => ( 
-                    <TouchableOpacity onPress={() => props.navigation.navigate("ProfileScreen")}>
-                        <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
-                    </TouchableOpacity>
+                  <TouchableOpacity onPress={() => 
+                    {
+                      if(user_id=="0")
+                      {
+                        props.navigation.navigate("Auth");
+                      }
+                      else
+                      {
+                        props.navigation.navigate("ProfileScreen")
+                      }
+                    }
+                  ///props.navigation.navigate("ProfileScreen")
+                  }>
+                      <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
+                  </TouchableOpacity>
                 ), //Set Header right icon
                 headerStyle: {
-                     backgroundColor: '#238A02', //Set Header color
+                     backgroundColor: '#f2a900', //Set Header color
                 },
                 headerTintColor: '#fff', //Set Header text color
                 headerTitleStyle: {
@@ -234,12 +310,24 @@ const MainStackNavigator = (props) => {
                 </TouchableOpacity>
               ),
               headerRight: () => ( 
-                  <TouchableOpacity onPress={() => props.navigation.navigate("ProfileScreen")}>
-                      <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
-                  </TouchableOpacity>
+                <TouchableOpacity onPress={() => 
+                  {
+                    if(user_id=="0")
+                    {
+                      props.navigation.navigate("Auth");
+                    }
+                    else
+                    {
+                      props.navigation.navigate("ProfileScreen")
+                    }
+                  }
+                ///props.navigation.navigate("ProfileScreen")
+                }>
+                    <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
+                </TouchableOpacity>
               ), //Set Header right icon
               headerStyle: {
-                   backgroundColor: '#238A02', //Set Header color
+                   backgroundColor: '#f2a900', //Set Header color
               },
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
@@ -249,6 +337,48 @@ const MainStackNavigator = (props) => {
           />
        </Stack.Navigator>
     );
+}
+const NotificationStackNavigator = (props) => {
+  return (
+    <Stack.Navigator>
+        <Stack.Screen
+          name="Notifications"
+          component={NotificationsView}
+          options={{
+            title: 'Notifications', //Set Header Title
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
+                  <Text style={styles.skipText}>&#8592;</Text> 
+              </TouchableOpacity>
+            ),
+            headerRight: () => ( 
+              <TouchableOpacity onPress={() => 
+                {
+                  if(user_id=="0")
+                  {
+                    props.navigation.navigate("Auth");
+                  }
+                  else
+                  {
+                    props.navigation.navigate("ProfileScreen")
+                  }
+                }
+              ///props.navigation.navigate("ProfileScreen")
+              }>
+                  <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
+              </TouchableOpacity>
+            ), //Set Header right icon
+            headerStyle: {
+                 backgroundColor: '#f2a900', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+                fontWeight: 'normal', //Set Header text style
+            },
+          }}
+        />
+     </Stack.Navigator>
+  );
 }
 
 const ProfileStackNavigator = (props) => {
@@ -270,7 +400,7 @@ const ProfileStackNavigator = (props) => {
             //   </TouchableOpacity>
             // ), //Set Header right icon
             headerStyle: {
-              backgroundColor: '#238A02', //Set Header color
+              backgroundColor: '#f2a900', //Set Header color
             },
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
@@ -296,12 +426,24 @@ const TermsConditionStackNavigator = (props) => {
                 </TouchableOpacity>
               ),
               headerRight: () => ( 
-                  <TouchableOpacity onPress={() => props.navigation.navigate("ProfileScreen")}>
-                      <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
-                  </TouchableOpacity>
+                <TouchableOpacity onPress={() => 
+                  {
+                    if(user_id=="0")
+                    {
+                      props.navigation.navigate("Auth");
+                    }
+                    else
+                    {
+                      props.navigation.navigate("ProfileScreen")
+                    }
+                  }
+                ///props.navigation.navigate("ProfileScreen")
+                }>
+                    <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#FFFFFF" />
+                </TouchableOpacity>
               ), //Set Header right icon
               headerStyle: {
-                  backgroundColor: '#238A02', //Set Header color
+                  backgroundColor: '#f2a900', //Set Header color
               },
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
@@ -316,7 +458,7 @@ const TermsConditionStackNavigator = (props) => {
 const BottomTabNavigator = (props) => {
     return (
       <Tab.Navigator
-          barStyle={{ backgroundColor: '#238A02' }}
+          barStyle={{ backgroundColor: '#f2a900' }}
           activeColor="#FFFFFF"
           screenOptions={({ route }) => ({
               tabBarIcon: ({ color }) => {
@@ -369,7 +511,7 @@ const ProfileStackNavigator1 = ({navigation}) => {
               </TouchableOpacity>
             ),
             headerStyle: {
-              backgroundColor: '#238A02', //Set Header color
+              backgroundColor: '#f2a900', //Set Header color
             },
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
@@ -386,6 +528,15 @@ const DrawerNavigatorRoutes = (props) => {
   }
   else   customTitle = `Welcome !!`;
 
+    if(props.item.userdata.user_id)
+    {
+      user_id = props.item.userdata.user_id
+    }
+    else
+    {
+      user_id = "0"
+    }
+  
   return (
     <Drawer.Navigator
       drawerContentOptions={{
@@ -413,6 +564,11 @@ const DrawerNavigatorRoutes = (props) => {
         name="AboutUsStackNavigator"
         options={{drawerLabel: 'About Us'}}
         component={AboutUsStackNavigator}
+      />
+        <Drawer.Screen
+        name="NotificationStackNavigator"
+        options={{drawerLabel: 'Notifications'}}
+        component={NotificationStackNavigator}
       />
       <Drawer.Screen
         name="TermsConditionStackNavigator"

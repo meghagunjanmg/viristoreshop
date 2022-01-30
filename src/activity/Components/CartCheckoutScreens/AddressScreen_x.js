@@ -123,7 +123,7 @@ const AddressScreen_x = (props) => {
 return(
     <View style={{height:"100%"}}>
         <ScrollView>
-            <TouchableOpacity style={{marginTop:20,backgroundColor:"#238A02",width:"95%",marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
+            <TouchableOpacity style={{marginTop:20,backgroundColor:"#f2a900",width:"95%",marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
              onPress={()=> props.navigation.navigate("AddAddressScreen", {selectedAddress: "",index:null})}
             >
                 <Text style={{color:"white"}}>Add New Address</Text>
@@ -135,18 +135,18 @@ return(
                     <Text style={{color:"#7f7f7f"}}>Address:- {address.house_no}-{address.society},{address.landmark},{address.city},{address.state}-{address.pincode}</Text>
                     <Text style={{color:"#7f7f7f"}}>Contact:- {address.receiver_phone}</Text>
                 </View>
-                <TouchableOpacity style={{backgroundColor:"#238A02",width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
+                <TouchableOpacity style={{backgroundColor:"#f2a900",width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
                  onPress={()=> props.navigation.navigate("AddAddressScreen", {selectedAddress: address,index:i})}>
                     <Text style={{color:"white"}}>Change Address</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{backgroundColor:"#238A02",width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
+                <TouchableOpacity style={{backgroundColor:"#f2a900",width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
                  onPress={()=> handleDeleteAddress(address.address_id)}>
                     <Text style={{color:"white"}}>Delete Address</Text>
                 </TouchableOpacity>
 
-                {address.select_status !== 1 && <TouchableOpacity style={{borderColor:"#238A02",borderWidth:1,width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
+                {address.select_status !== 1 && <TouchableOpacity style={{borderColor:"#f2a900",borderWidth:1,width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
                  onPress={()=> handleChangeAddress(address.address_id)}>
-                    <Text style={{color:"#238A02"}}>Select this Address</Text>
+                    <Text style={{color:"#f2a900"}}>Select this Address</Text>
                 </TouchableOpacity>}
             </View>);
             })}

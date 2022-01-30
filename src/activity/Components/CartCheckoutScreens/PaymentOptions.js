@@ -480,6 +480,13 @@ const PaymentOptions = (props) =>
 	    }
 	    return 0;
 	}
+    const TaxesPrice = () => {
+		// const { cartItems } = cartItems;
+		if(cartItemsArray){
+			return cartItemsArray.reduce((sum, item) => sum + (item.qty * ((item.gst*item.price)/100+(item.hst*item.price)/100)), 0 );
+		}
+		return 0;
+	}
 
     const successOrder = () => {
         setSuccessModal(!successModal);
@@ -523,7 +530,7 @@ const PaymentOptions = (props) =>
                       text="Card Details"
                       loading={loading}
                       onPress={handleCardDetails}
-                    />:<Text style={{color:"#238A02",width:"90%",marginLeft:"auto",marginRight:"auto"}}>
+                    />:<Text style={{color:"#f2a900",width:"90%",marginLeft:"auto",marginRight:"auto"}}>
                         Card Details are entered, click Pay now!!
                     </Text>}
                     {/* <TouchableOpacity >
@@ -531,15 +538,15 @@ const PaymentOptions = (props) =>
                     </TouchableOpacity> */}
                 </View>:<View></View>}
                 {/* REWARDS BUTTON */}
-                {/* {rewardsRedeemed?<Text style={{color:"#238A02",backgroundColor:"white",elevation:5,textAlign:"center",padding: 10,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginTop:10,marginBottom:20}}>Rewards are Redeemed!!</Text>:
+                {/* {rewardsRedeemed?<Text style={{color:"#f2a900",backgroundColor:"white",elevation:5,textAlign:"center",padding: 10,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginTop:10,marginBottom:20}}>Rewards are Redeemed!!</Text>:
                 <View>
                     {props.item.userdata.rewards > 0?<TouchableOpacity
                         onPress={()=> {redeemRewards()}}
-                        style={{backgroundColor:"#238A02",padding: 10,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginTop:10,marginBottom:20}}
+                        style={{backgroundColor:"#f2a900",padding: 10,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginTop:10,marginBottom:20}}
                         >
                         <Text style={{color:"white",textAlign:"center"}}>Redeem Rewards ({props.item.userdata.rewards})</Text>
                     </TouchableOpacity>:
-                    <View style={{backgroundColor:"#238A02",opacity:.5,padding: 10,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginTop:10,marginBottom:20}}>
+                    <View style={{backgroundColor:"#f2a900",opacity:.5,padding: 10,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginTop:10,marginBottom:20}}>
                         <Text style={{color:"white",textAlign:"center"}}>Redeem Rewards ({props.item.userdata.rewards})</Text>
                     </View>}
                 </View>
@@ -572,7 +579,7 @@ const PaymentOptions = (props) =>
                         <Text style={{flex:2,alignSelf:"center"}}>Promo Code</Text>
                         {showPromoCodeCheckButton?<TouchableOpacity
                             onPress={()=>fetchCouponCodes()}
-                            style={{flex:1,backgroundColor:"#238A02",padding: 7,borderRadius:10}}
+                            style={{flex:1,backgroundColor:"#f2a900",padding: 7,borderRadius:10}}
                             >
                             <Text style={{color:"white",textAlign:"center"}}>Check</Text>
                         </TouchableOpacity>:
@@ -593,7 +600,7 @@ const PaymentOptions = (props) =>
                                     <Text style={{borderWidth:1,borderColor:"grey",borderRadius:10,padding:5,textAlign:"center",marginBottom:10}}>{code.coupon_code}</Text>
                                     <TouchableOpacity 
                                         onPress={() => handleSubmitCupon(code.coupon_code)}
-                                        style={{padding:7,backgroundColor:"#238A02",borderRadius:10}}>
+                                        style={{padding:7,backgroundColor:"#f2a900",borderRadius:10}}>
                                         <Text style={{textAlign:"center",color:"white"}}>Apply</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -601,7 +608,7 @@ const PaymentOptions = (props) =>
                         })}
                     </ScrollView>
                 </View>:<View style={{width:"95%",marginRight:"auto",marginLeft:"auto",padding:10,borderRadius:10,backgroundColor:"white",elevation:5}}>
-                    <Text style={{color:"#238A02",textAlign:"center"}}>Promo Code Applied!!</Text>
+                    <Text style={{color:"#f2a900",textAlign:"center"}}>Promo Code Applied!!</Text>
                     </View>} */}
                 <View style={styles.rewardspointWrap}>
                     <Text style={styles.rewardspoint}>Checkout Rewards</Text>
@@ -616,7 +623,7 @@ const PaymentOptions = (props) =>
             <View style={{flexDirection:"row",position:"relative",bottom:0}}>
                 <View style={{flex:2}}>
                     <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15}}>Total Amount:</Text>
-                    <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15,color:"grey"}}>{props.item.currency_sign}{(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue).toFixed(2)}</Text>
+                    <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15,color:"grey"}}>{props.item.currency_sign}{(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2)}</Text>
                 </View>
 
                 {showPayNowButton?<TouchableOpacity
@@ -624,7 +631,7 @@ const PaymentOptions = (props) =>
                     <Text style={{color:"white", fontWeight:"bold"}}>PAY NOW</Text>
                 </TouchableOpacity>:
                 <View style={{flex:1,
-                    backgroundColor:"#238A02",
+                    backgroundColor:"#f2a900",
                     width:"100%",
                     opacity:.5,
                     marginLeft:"auto",
@@ -717,7 +724,7 @@ const styles = StyleSheet.create({
     },
     applyButton: {
         flex:1,
-        backgroundColor:"#238A02",
+        backgroundColor:"#f2a900",
         width:"100%",
         marginLeft:"auto",
         marginRight:"auto",
@@ -737,7 +744,7 @@ const styles = StyleSheet.create({
     },
     paynowButton: {
         flex:1,
-        backgroundColor:"#238A02",
+        backgroundColor:"#f2a900",
         width:"100%",
         marginLeft:"auto",
         marginRight:"auto",
@@ -785,7 +792,7 @@ const styles = StyleSheet.create({
         width:120
     },
     buttonClose: {
-        backgroundColor: "#238A02",
+        backgroundColor: "#f2a900",
     },
     textStyle: {
         color: "white",

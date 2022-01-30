@@ -86,6 +86,13 @@ const CheckOutScreen = (props) => {
 	    }
 	    return 0;
 	}
+  const TaxesPrice = () => {
+		// const { cartItems } = cartItems;
+		if(cartItemsArray){
+			return cartItemsArray.reduce((sum, item) => sum + (item.qty * ((item.gst*item.price)/100+(item.hst*item.price)/100)), 0 );
+		}
+		return 0;
+	}
     if(props.item.userdata.user_id === undefined)
     {
         return(<View>{props.navigation.navigate("Auth")}</View>)
@@ -122,7 +129,7 @@ const CheckOutScreen = (props) => {
                         }
                         <TouchableOpacity
                          onPress={()=> props.navigation.navigate("AddressScreen")}
-                         style={{backgroundColor:"#238A02",borderRadius:10,width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center"}}>
+                         style={{backgroundColor:"#f2a900",borderRadius:10,width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center"}}>
                             <Text style={{color:"white"}}>Change or Add address</Text>
                         </TouchableOpacity>
                     </View>
@@ -191,7 +198,7 @@ const CheckOutScreen = (props) => {
                               </View>
                             </View>
                             
-                            <TouchableOpacity onPress={showDatepicker} style={{backgroundColor:"#238A02",padding:10,marginTop:10,marginBottom:10,borderRadius:10,width:"90%",marginLeft:"auto",marginRight:"auto"}}>
+                            <TouchableOpacity onPress={showDatepicker} style={{backgroundColor:"#f2a900",padding:10,marginTop:10,marginBottom:10,borderRadius:10,width:"90%",marginLeft:"auto",marginRight:"auto"}}>
                               <Text style={{color:"white",textAlign:"center"}}>Choose a delivery date</Text>
                             </TouchableOpacity>
                           </View>
@@ -216,8 +223,8 @@ const CheckOutScreen = (props) => {
                               initial={0}
                               onPress={(value) => {changeRadioValue(value)}}
                               borderWidth={1}
-                              buttonColor={'#238A02'}
-                              // buttonOuterColor={"#238A02"}
+                              buttonColor={'#f2a900'}
+                              // buttonOuterColor={"#f2a900"}
                               labelColor={"grey"}
                               buttonSize={15}
                               buttonOuterSize={25}
@@ -251,7 +258,7 @@ const CheckOutScreen = (props) => {
                               <TextInput
                                   style={{flex:3,width:"50%",borderColor:"grey",borderBottomWidth:1}} 
                                   placeholder="Enter the code here"/>
-                              <TouchableOpacity style={{flex:1,borderRadius:10,backgroundColor:"#238A02",width:"100%",marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center"}}>
+                              <TouchableOpacity style={{flex:1,borderRadius:10,backgroundColor:"#f2a900",width:"100%",marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center"}}>
                                   <Text style={{color:"white"}}>Check</Text>
                               </TouchableOpacity>
                           </View>
@@ -262,7 +269,7 @@ const CheckOutScreen = (props) => {
                 <View style={{flexDirection:"row",position:"relative",bottom:0,marginTop:7,marginBottom:7,backgroundColor:"white"}}>
                     <View style={{flex:2,borderRadius:10}}>
                         <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15}}>Price Detail's</Text>
-                        <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15,color:"grey"}}>{props.item.currency_sign} {(subtotalPrice()+20.00).toFixed(2)}</Text>
+                        <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15,color:"grey"}}>{props.item.currency_sign} {(subtotalPrice()+TaxesPrice()+20.00).toFixed(2)}</Text>
                     </View>
                     <TouchableOpacity 
                         onPress={()=> 
@@ -282,7 +289,7 @@ const CheckOutScreen = (props) => {
                               props.navigation.navigate("PaymentOptions")
                             }
                           }}
-                        style={{flex:1,backgroundColor:"#238A02",width:"100%",marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10,marginRight:8}}>
+                        style={{flex:1,backgroundColor:"#f2a900",width:"100%",marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10,marginRight:8}}>
                         <Text style={{color:"white"}}>Checkout</Text>
                     </TouchableOpacity>
                 </View>
@@ -317,7 +324,7 @@ const mapStateToProps = (state) => {
       marginBottom:5
     },
     dateStyle:{
-      color:"#238A02",
+      color:"#f2a900",
       fontSize:20,
       flex:1,
       textAlign:"center",
@@ -412,7 +419,7 @@ const mapStateToProps = (state) => {
       width: 30,
       height: 30,
       margin: 5,
-      backgroundColor: '#238A02',
+      backgroundColor: '#f2a900',
       justifyContent: "center",
       alignItems: "center",
       textAlign: "center",
@@ -463,7 +470,7 @@ const mapStateToProps = (state) => {
       marginBottom: 16,
     },
     rechargebutton: {
-      backgroundColor: '#238A02',
+      backgroundColor: '#f2a900',
       borderWidth: 0,
       color: '#FFFFFF',
       borderColor: '#7DE24E',

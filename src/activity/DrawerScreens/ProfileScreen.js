@@ -51,6 +51,8 @@ const ProfileScren = (props) => {
     
     if(props.item.userdata.user_name === undefined)
     navigation.replace("Auth");
+
+    updateNotify()
   }, []);
 
   const updateUserdata = async () =>
@@ -122,6 +124,10 @@ const ProfileScren = (props) => {
       .then(result => {
         console.log(result)
         props.UpdateNotifyByData(tempData);
+
+
+        updateNotify()
+
         Toast.show("Alerts data saved!!");
         setLoading(false);
       })
@@ -130,6 +136,33 @@ const ProfileScren = (props) => {
         setLoading(false);
       });
   }
+
+
+  const updateNotify= () => {
+    var formdata = new FormData();
+    formdata.append("user_id", props.item.userdata.user_id);
+
+    var requestOptions = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    };
+    
+    fetch("http://myviristore.com/admin/api/notifyby", requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      if(result.data.sms==1) {
+        setIsEnabledSms(true)
+      }
+      if(result.data.email==1) {
+        setIsEnabledEmail(true)
+      }
+      if(result.data.app==1) {
+        setIsEnabledApp(true)
+      }
+    })
+    .catch(error => console.log('error', error));
+  }
   return(
     <SafeAreaView style={styles.mainBody}>
       <Loader loading={loading} />
@@ -137,7 +170,7 @@ const ProfileScren = (props) => {
                   {userImage !== "1"
                   ?<View style={{alignItems: 'center'}}>
                       <TouchableOpacity>
-                          <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={150} color="#238A02" />
+                          <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={150} color="#f2a900" />
                       </TouchableOpacity>
                   </View>:
                   <View style={{alignItems: 'center'}}>
@@ -147,12 +180,12 @@ const ProfileScren = (props) => {
                     //banner: bannerPhoto.banner_image,
                     uri:userImage
                     }}
-                    style={styles.imageStyle}
+                    //style={styles.imageStyle}
                   />
                   </View>}
   
                   <View style={styles.SectionStyle}>
-                      <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#238A02" />
+                      <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#f2a900" />
                       <TextInput
                           style={styles.inputStyle}
                           textContentType="name"
@@ -179,7 +212,7 @@ const ProfileScren = (props) => {
                   </View>
 
                   <View style={styles.SectionStyle}>
-                      <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#238A02" />
+                      <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#f2a900" />
                       <TextInput
                           style={styles.inputStyle}
                           textContentType="name"
@@ -206,7 +239,7 @@ const ProfileScren = (props) => {
                   </View>
   
                   <View style={styles.SectionStyle}>
-                      <FontAwesome style={styles.keyIcon} name="mobile" size={20} color="#238A02" />
+                      <FontAwesome style={styles.keyIcon} name="mobile" size={20} color="#f2a900" />
                       <TextInput
                           style={styles.inputStyle}
                           textContentType="telephoneNumber"
@@ -232,7 +265,7 @@ const ProfileScren = (props) => {
                   </View>
   
                   <View style={styles.SectionStyle}>
-                      <FontAwesome style={styles.keyIcon} name="envelope" size={20} color="#238A02" />
+                      <FontAwesome style={styles.keyIcon} name="envelope" size={20} color="#f2a900" />
                       <TextInput
                           style={styles.inputStyle}
                           defaultValue={email}
@@ -275,7 +308,7 @@ const ProfileScren = (props) => {
                           <Switch
                               style={{left: 230,top: 10,}}
                               trackColor={{ false: "#767577", true: "#F9AA93" }}
-                              thumbColor={isEnabledEmail ? "#238A02" : "#f4f3f4"}
+                              thumbColor={isEnabledEmail ? "#f2a900" : "#f4f3f4"}
                               ios_backgroundColor="#3e3e3e"
                               onValueChange={() => toggleSwitchEmail()}
                               value={isEnabledEmail}
@@ -289,7 +322,7 @@ const ProfileScren = (props) => {
                           <Switch
                               style={{left: 225,top: 10,}}
                               trackColor={{ false: "#767577", true: "#F9AA93" }}
-                              thumbColor={isEnabledApp ? "#238A02" : "#f4f3f4"}
+                              thumbColor={isEnabledApp ? "#f2a900" : "#f4f3f4"}
                               ios_backgroundColor="#3e3e3e"
                               onValueChange={() => toggleSwitchApp()}
                               value={isEnabledApp}
@@ -303,7 +336,7 @@ const ProfileScren = (props) => {
                           <Switch
                               style={{left: 237,top: 10,}}
                               trackColor={{ false: "#767577", true: "#F9AA93" }}
-                              thumbColor={isEnabledSms ? "#238A02" : "#f4f3f4"}
+                              thumbColor={isEnabledSms ? "#f2a900" : "#f4f3f4"}
                               ios_backgroundColor="#3e3e3e"
                               onValueChange={() => toggleSwitchSms()}
                               value={isEnabledSms}
@@ -312,7 +345,7 @@ const ProfileScren = (props) => {
                       
                   </View>
                   {showButton?<TouchableOpacity style={{
-                      backgroundColor: '#238A02',
+                      backgroundColor: '#f2a900',
                       borderWidth: 0,
                       color: '#FFFFFF',
                       borderColor: '#7DE24E',
@@ -349,7 +382,7 @@ const ProfileScren = (props) => {
                   <TouchableOpacity 
                     onPress={() => props.navigation.navigate("Auth")}
                     style={{
-                      backgroundColor: '#238A02',
+                      backgroundColor: '#f2a900',
                       borderWidth: 0,
                       color: '#FFFFFF',
                       borderColor: '#7DE24E',
@@ -426,7 +459,7 @@ const styles = StyleSheet.create({
     top: 10,
   },
   productSection:{
-    backgroundColor: '#238A02', 
+    backgroundColor: '#f2a900', 
     borderRadius: 10,
     width: 50,
     left: 80,
@@ -440,7 +473,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonStyle: {
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',
@@ -453,7 +486,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonStyleInactive: {
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     opacity:0.5,
     borderWidth: 0,
     color: '#FFFFFF',

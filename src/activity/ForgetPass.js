@@ -32,7 +32,7 @@ const ForgetPass = ({ navigation }) => {
                 </View>
 
                 <View style={styles.searchSection}>
-                    <SimpleLineIcons style={styles.keyIcon} name="screen-smartphone" size={20} color="#238A02" />
+                    <SimpleLineIcons style={styles.keyIcon} name="screen-smartphone" size={20} color="#f2a900" />
                     <TextInput
                         style={styles.input}
                         placeholder="Mobile Number"
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     color: '#FFFFFF',
-    backgroundColor: "#238A02",
+    backgroundColor: "#f2a900",
     marginTop: 30,
     marginLeft: "10%",
   },
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   skipText:{
-    color: "#238A02",
+    color: "#f2a900",
     alignItems: "flex-end",
     marginTop: 30,
     marginLeft: 10,

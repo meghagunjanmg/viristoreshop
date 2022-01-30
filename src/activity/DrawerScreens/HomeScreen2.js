@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
+import MapView, { Marker } from 'react-native-maps';
 import {StyleSheet, 
+  Dimensions,
   View,
   Text, 
   SafeAreaView, 
@@ -23,13 +25,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import {_storeData, _retrieveData} from "../Storage";
 
 const Homescreen = (props) => {
-
   if(props.item.userdata.first_name !== undefined){
     customTitle = `Welcome ${props.item.userdata.first_name} !!`;
   }
   else   customTitle = `Welcome !!`;
 
   props.navigation.setOptions({title: customTitle})
+ 
 
   var [allProducts,changeAllProducts] = useState([]);
   var [errorMsg,changeErrorMsg] = useState("");
@@ -160,15 +162,16 @@ const Homescreen = (props) => {
   }
 
   useEffect(() => {
-
     // Update the user data
     console.log("checking in home page for user id");
     readUserData();
     console.log("checking in home page >>> ");
     _getLocationAsync();
+    //newloc()
     console.log(`Status is : -${props.item.homepageData.status}`);
     //props.navigation.replace('DrawerNavigationRoutes');
   }, [allProducts])
+
 
   const readUserData = async () => {
     try {
@@ -251,29 +254,62 @@ const Homescreen = (props) => {
       .catch(error => console.log('error', error));
   }
 
+  const remove =async (key) =>{
+    try {
+        await AsyncStorage.removeItem(key);
+        return true;
+    }
+    catch(exception) {
+        return false;
+    }
+  }
+
   _getLocationAsync = async () => {
     console.log("get lacation async called")
     let { status } = await Location.requestPermissionsAsync();
     if (status !== 'granted') 
     {
       changeLocationResult("Permission to access location was denied");
+      setError('Permission to access location was denied');
     }
-  
-    let location = await Location.getLastKnownPositionAsync({enableHighAccuracy: true });
-    
-    await props.getLocation(location.coords.latitude,location.coords.longitude);
-    // Center the map on the location we just fetched.
-    changeLongi(location.coords.longitude);
-    changeLati(location.coords.latitude);
-    // console.log(latitude);
-    changeErrorMsg(null);
-    _getHomePageDataAsync();
+
+    try {
+      const value1 = await AsyncStorage.getItem('lat');
+      const value2 = await AsyncStorage.getItem('lng');
+      if(value1 !== null){
+        changeLongi(value2);
+        changeLati(value1);
+        changeErrorMsg(null);
+   
+        _getHomePageDataAsync();   
+        //ToastAndroid.showWithGravityAndOffset("stored "+value1+" "+value2,ToastAndroid.LONG,ToastAndroid.BOTTOM,25,50);
+      }else {
+        let location = await Location.getLastKnownPositionAsync({enableHighAccuracy: true });
+        await props.getLocation(location.coords.latitude,location.coords.longitude);
+        // Center the map on the location we just fetched.
+        changeLongi(location.coords.longitude);
+        changeLati(location.coords.latitude);
+
+  remove("lat")
+  remove("lng")
+  console.log((location.coords.latitude));
+        _storeData("lat",location.coords.latitude+"");
+        _storeData("lng",location.coords.longitude+"");
+     
+       // ToastAndroid.showWithGravityAndOffset("current "+location.coords.latitude+" "+location.coords.longitude,ToastAndroid.LONG,ToastAndroid.BOTTOM,25,50);
+        changeErrorMsg(null);
+        _getHomePageDataAsync();
+      }
+    } catch (e) {
+      console.log('Failed to fetch the data from storage');
+    }  
   }
 
-  _getHomePageDataAsync = async () => {
-    console.log("get home page called")
-    console.log(latitude);
 
+  _getHomePageDataAsync = async () => {
+  
+    //ToastAndroid.showWithGravityAndOffset("API "+latitude+" "+longitude,ToastAndroid.LONG,ToastAndroid.BOTTOM,25,50);
+    
     let dataToSend = {lat: latitude, lng: longitude};
     let formBody = [];
     for (let key in dataToSend) {
@@ -393,7 +429,6 @@ const Homescreen = (props) => {
         console.error(error);
       });
     }
-
       _getProductDataAsync = async (catID, title,i) => {
         console.log("get product data called")
         new Promise((resolve) => {
@@ -417,11 +452,13 @@ const Homescreen = (props) => {
           })
             .then((response) => response.json())
             .then((responseJson) => {
+            
               let productResponseData = responseJson.data;
               productResponseData[0].parent_category_id = catID;
               productResponseData[0].parent_category_title = title;
               productResponseData.forEach(product => {product.qty = 0;});
               var tempArray = responseProductDataArray;
+              console.log(productResponseData)
               tempArray.push(productResponseData)
               changeResponseProductDataArray(tempArray);
               changeResponseStatusProduct(responseJson.status)
@@ -452,10 +489,9 @@ const Homescreen = (props) => {
             })
             .catch((error) => {
               changeloading(false);
-              console.error(error);
+              console.error(error+" ****" +latitude+" "+longitude);
             });
         }) 
-        
       }
 
       //change
@@ -657,7 +693,7 @@ const Homescreen = (props) => {
                   // >
                   //     <View style={{flexDirection:"column",overflow:"hidden",width:80,justifyContent:"center",backgroundColor:"white",height:"95%",marginLeft:3,marginRight:3,marginTop:2,borderRadius:10}}>
                   //       <Image style={{flex:2,width:50,height:50,borderRadius:50,alignSelf:"center",marginTop:5}} source={{uri:'http://myviristore.com/admin/' + topCategory.image}}/> 
-                  //       <Text key={topCategory.title} style={{flex:1,textAlign:"center",fontSize:8,marginTop:5,fontWeight:"bold",color:"#238A02"}}>{topCategory.title}</Text>
+                  //       <Text key={topCategory.title} style={{flex:1,textAlign:"center",fontSize:8,marginTop:5,fontWeight:"bold",color:"#f2a900"}}>{topCategory.title}</Text>
                   //     </View>
                   // </TouchableOpacity>
                 ))}
@@ -709,9 +745,9 @@ const Homescreen = (props) => {
                 borderColor: 'transparent',
                 backgroundColor: '#F2EDED',
               }}
-              activeTabStyle={{backgroundColor: '#F2EDED', borderBottomWidth: 1, borderColor: '#238A02',}}
+              activeTabStyle={{backgroundColor: '#F2EDED', borderBottomWidth: 1, borderColor: '#f2a900',}}
               tabTextStyle={{color: '#000000', fontSize: 12,}}
-              activeTabTextStyle={{color: '#238A02', fontWeight: 'bold'}}
+              activeTabTextStyle={{color: '#f2a900', fontWeight: 'bold'}}
             />
             {/* change */}
             {customStyleIndex === 0 && (
@@ -959,7 +995,7 @@ const Homescreen = (props) => {
                 }
                 Linking.openURL(number);
               }}
-              style={{backgroundColor:"#238A02",marginBottom:5,borderRadius:100,padding:10,justifyContent:"center",alignItems:"center"}}>
+              style={{backgroundColor:"#f2a900",marginBottom:5,borderRadius:100,padding:10,justifyContent:"center",alignItems:"center"}}>
             <FontAwesome name="phone" size={20} color="#FFFFFF"  />
             </TouchableOpacity>
                     
@@ -975,12 +1011,12 @@ const Homescreen = (props) => {
                   alert("Make sure WhatsApp installed on your device");  //<---Error
                 }); 
               }}
-              style={{backgroundColor:"#238A02",marginBottom:5,borderRadius:50,padding:10,justifyContent:"center",alignItems:"center"}}>
+              style={{backgroundColor:"#f2a900",marginBottom:5,borderRadius:50,padding:10,justifyContent:"center",alignItems:"center"}}>
             <FontAwesome name="whatsapp" size={20} color="#FFFFFF"  />
             </TouchableOpacity>
 
             {/* users */}
-            <TouchableOpacity style={{backgroundColor:"#238A02",marginBottom:5,borderRadius:50,padding:10,justifyContent:"center",alignItems:"center"}}>
+            <TouchableOpacity style={{backgroundColor:"#f2a900",marginBottom:5,borderRadius:50,padding:10,justifyContent:"center",alignItems:"center"}}>
             <FontAwesome name="users" size={20} color="#FFFFFF"  />
             </TouchableOpacity>
 
@@ -999,7 +1035,7 @@ const Homescreen = (props) => {
                   'com.apple.UIKit.activity.PostToTwitter'
                 ]
               })}}
-              style={{backgroundColor:"#238A02",width:50,marginBottom:5,borderRadius:50,padding:10,justifyContent:"center",alignItems:"center"}}>
+              style={{backgroundColor:"#f2a900",width:50,marginBottom:5,borderRadius:50,padding:10,justifyContent:"center",alignItems:"center"}}>
             <FontAwesome name="share-alt" size={20} color="#FFFFFF"  />
             </TouchableOpacity>
           </View>:<View></View>}
@@ -1011,13 +1047,13 @@ const Homescreen = (props) => {
                 changePlusButton(!plusButtons)
               }}
               style={{marginBottom:5,borderRadius:100,justifyContent:"center",alignItems:"center"}}>
-              <FontAwesome name="times-circle" size={60} color="#238A02"  />
+              <FontAwesome name="times-circle" size={60} color="#f2a900"  />
             </TouchableOpacity>:<TouchableOpacity 
               onPress={() => {
                 changePlusButton(!plusButtons)
               }}
               style={{marginBottom:5,borderRadius:100,justifyContent:"center",alignItems:"center"}}>
-              <FontAwesome name="plus-circle" size={60} color="#238A02"  />
+              <FontAwesome name="plus-circle" size={60} color="#f2a900"  />
             </TouchableOpacity>}
           </View>
         </View>
@@ -1044,14 +1080,36 @@ const Homescreen = (props) => {
     );
   }
   else{
-    return (<View>
-        <Text style={{textAlign:"center",width:"90%",marginLeft:"auto",marginRight:"auto",marginTop:300,color:"grey"}}>We are unable to connect to our service, Please check your Internet Connection or try again later!!</Text>
-        {/* {_getHomePageDataAsync()} */}
-      </View>
+    return (
+   // <View><Text style={{textAlign:"center",width:"90%",marginLeft:"auto",marginRight:"auto",marginTop:300,color:"grey"}}>We are unable to connect to our service, Please check your Internet Connection or try again later!!</Text>{/* {_getHomePageDataAsync()} */}</View>
+      
+        <SafeAreaView style={styles.noItemsContainer}>
+          <View style={styles.items}>
+              <Text style={styles.itemstext}>
+                We are not delivering in this Area.
+              </Text>
+            </View>
+            
+            <View style={styles.rechargebutton}> 
+              <TouchableOpacity onPress={() => {
+                console.log(latitude+" "+longitude)
+                try {
+                  navigation.navigate('MapComponent', {screen: "MapComponent", params: {latitude:latitude,longitude:longitude}})
+                } catch (error) {
+                  console.log(error)
+                }
+              }}
+>
+                <Text style={styles.textRecharge}>CHANGE YOUR LOCATION</Text>
+              </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      
     )
   }
   
 }
+
 const mapStateToProps = (state) => {
   // console.log("State Contains:-"+ state)
   // console.log(`Map State to props:- ${state.item.homepageData.status}`)
@@ -1066,6 +1124,16 @@ export default connect(mapStateToProps, {getItems,getLocation,updatedCart,getHom
 // export default HomeScreen;
 
 const styles = StyleSheet.create({
+  map: {
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height * 0.90,
+},
+heading: {
+  alignSelf: 'center',
+  paddingTop: 20,
+  marginBottom: 10,
+  fontSize: 24
+},
   container:{
     flex:1,
     backgroundColor:'#F2EDED',
@@ -1155,7 +1223,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     margin: 5,
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
@@ -1224,7 +1292,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   rechargebutton: {
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from "react";
+import {useState,useEffect} from "react";
 import {Text,StyleSheet, View, Image,TextInput,Alert} from 'react-native';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import CardButton from "./StripePaymentComponent/CardButton";
@@ -19,7 +19,30 @@ const WalletScreen = (props) => {
   var [country, setCountry] = useState("");
   var [paymentStatus, setPaymentStatus] = useState("");
   var [country, setCountry] = useState("");
+  var [wallet, setWallet] = useState(props.item.userdata.wallet);
+  
+  useEffect(() => {
+    var formdata = new FormData();
+    formdata.append("user_id",props.item.userdata.user_id );
 
+    var requestOptions = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch("http://myviristore.com/admin/api/myprofile", requestOptions)
+      .then(response => response.json())
+      .then(async result => {
+        console.log(result)
+        await props.getUserData(result.data)
+        setWallet(result.data.wallet)
+
+      })
+      .catch(error => console.log('error', error));
+    
+  }, [])
+  
   const getCountryLocation = () =>{
     fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + props.item.latitude + "," + props.item.longitude + "&key=" + "AIzaSyCKabiwGyic2E7QicGIz2Fs_D81DCnWb1Y")
           .then((response) => response.json())
@@ -195,13 +218,13 @@ const handleCheckOutAPI = (method, status) => {
                My Wallet Amount
             </Text>
             <Text style={styles.dollarvalue}>
-              {props.item.currency_sign} {props.item.userdata.wallet?props.item.userdata.wallet:props.item.userdata.wallet}
+              {props.item.currency_sign} {wallet}
             </Text>
         </View>
         <View > 
             {clicked?<View>
               <TextInput
-                  style={{color: '#424242',borderColor:"#238A02",borderWidth:2,width:300,padding:7,borderRadius:50,marginBottom:15,textAlign:"center"}}
+                  style={{color: '#424242',borderColor:"#f2a900",borderWidth:2,width:300,padding:7,borderRadius:50,marginBottom:15,textAlign:"center"}}
                   keyboardType = 'numeric'
                   placeholder="Amount"
                   underlineColorAndroid="transparent"
@@ -210,22 +233,22 @@ const handleCheckOutAPI = (method, status) => {
                 />
               
               {cardDetailsEntered === false?<CardButton
-                style={{borderRadius:10,width:300,marginLeft:0,borderColor:"#238A02",}}
+                style={{borderRadius:10,width:300,marginLeft:0,borderColor:"#f2a900",}}
                 text="Enter Card Details"
                 loading={loading}
                 onPress={handleCardDetails}
               />
-              :<Text style={{color:"#238A02",width:"90%",marginLeft:"auto",marginRight:"auto",marginBottom:20,}}>
+              :<Text style={{color:"#f2a900",width:"90%",marginLeft:"auto",marginRight:"auto",marginBottom:20,}}>
                   Card Details are entered, click Pay now!!
               </Text>}
 
               {setCardDetailsEntered?<TouchableOpacity 
                 onPress={handlePayNowButton}
-                style={{backgroundColor:"#238A02",width:300,borderRadius:10,padding:10,marginBottom:20,}}>
+                style={{backgroundColor:"#f2a900",width:300,borderRadius:10,padding:10,marginBottom:20,}}>
                 <Text style={{textAlign:"center",color:"white"}}>Pay Now</Text>
               </TouchableOpacity>:<View></View>}
             </View>:
-            <TouchableOpacity style={{backgroundColor:"#238A02",width:200,borderRadius:10}}
+            <TouchableOpacity style={{backgroundColor:"#f2a900",width:200,borderRadius:10}}
             onPress={() => {
               if(props.item.userdata.user_id === undefined)
               {
@@ -287,7 +310,7 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
   rechargebutton: {
-      backgroundColor: '#238A02',
+      backgroundColor: '#f2a900',
       borderWidth: 0,
       color: '#FFFFFF',
       borderColor: '#7DE24E',

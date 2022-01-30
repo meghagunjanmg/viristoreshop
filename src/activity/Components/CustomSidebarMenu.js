@@ -139,7 +139,7 @@ const stylesSidebar = StyleSheet.create({
       flexDirection: 'row',
       height: 70,
       //marginHorizontal: 20,
-      backgroundColor: '#238A02',
+      backgroundColor: '#f2a900',
       marginTop: 15,
       justifyContent: 'space-between',
       padding: 10,

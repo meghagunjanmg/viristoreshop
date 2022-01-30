@@ -1,6 +1,5 @@
 
 import 'react-native-gesture-handler';
-
 import React, {useEffect, useState} from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -32,6 +31,8 @@ import AddtoCartPage from "./src/activity/Components/AddtoCartPage"
 import OrderDetailsScreen from "./src/activity/Components/OrderDetailsScreen.js"
 import OrderCancelPageScreen from "./src/activity/Components/OrderCancelPage.js";
 import DrawerNavigationRoutes from './src/activity/DrawerNavigatorRoutes';
+import MapComponent from './src/activity/MapComponent';
+
 import PromocodeScreen from './src/activity/Components/PromocodeScreen';
 import { TouchableOpacity } from 'react-native';
 import { Provider } from 'react-redux';
@@ -183,6 +184,26 @@ const AddressScreenStackNavigator = () => {
           component={AddressScreen}
           options={{
             title: 'Saved Address', //Set Header Title
+            headerStyle: {
+              backgroundColor: '#f2a900', //Set Header color
+            },
+            headerTintColor: '#fff', //Set Header text color
+            headerTitleStyle: {
+              fontWeight: 'normal', //Set Header text style
+            },
+          }}
+        />
+      </Stack.Navigator>
+  );
+}
+const MapComponentStackNavigator = ({navigation}) => {
+    return (
+    <Stack.Navigator>
+        <Stack.Screen
+          name="MapComponent"
+          component={MapComponent}
+          options={{
+            title: 'Map', //Set Header Title
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
@@ -385,6 +406,7 @@ PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
   onRegister: function (token) {
     console.log("TOKEN:", token);
+    _storeData("token", token.token);
   },
 
   // (required) Called when a remote is received or opened, or local notification is opened
@@ -444,6 +466,8 @@ PushNotification.configure({
 
 
   const readData = async () => {
+
+
     try {
       const value = await AsyncStorage.getItem('userId');
       if(value !== null){
@@ -456,9 +480,21 @@ PushNotification.configure({
     } catch (e) {
       console.log('Failed to fetch the data from storage');
     }
+
+    remove("lat")
+    remove("lng")
+    
   }
 
-  
+  const remove =async (key) =>{
+    try {
+        await AsyncStorage.removeItem(key);
+        return true;
+    }
+    catch(exception) {
+        return false;
+    }
+  }
     return (
       <Provider store={store}>
       <NavigationContainer>
@@ -530,6 +566,11 @@ PushNotification.configure({
             component={WalletStackNavigator}
             options={{headerShown: false}}
           />
+           <Stack.Screen
+            name="MapComponent"
+            component={MapComponentStackNavigator}
+            options={{headerShown: false}}
+          />
            {/* wallet navigator */}
            <Stack.Screen
             name="CartScreen"
@@ -546,6 +587,7 @@ PushNotification.configure({
             component={AddressScreenStackNavigator}
             options={{headerShown: false}}
           />
+         
           {/* Navigation Drawer as a landing page */}
           <Stack.Screen
             name="DrawerNavigationRoutes"
@@ -658,7 +700,7 @@ PushNotification.configure({
               },
             }}
           />
-  
+               
           {/* Add payment option page navigator */}
           {/* <Stack.Screen
             name="PaymentOptions"

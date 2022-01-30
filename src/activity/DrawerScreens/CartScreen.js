@@ -25,8 +25,12 @@ const Cart = (props) => {
   var [value,changeRadioValue] = useState("08:00 - 10:00");
   var [newCartArray,changeNewCartArray] = useState([]);
   var [deliveryInstruction,setDeliveryInstruction] = useState("");
+  var [addresss,setAddress] = useState("");
   var [showDeliveryInstructionButton,setShowDeliveryInstructionButton] = useState(true);
   var [showGreenTick,setShowGreenTick] = useState(false);
+  var [rewardsv,setRewardsV] = useState("");
+
+
   var [radio_props,changeRadioProps] = useState([
       // {label: '08:00 - 10:00', value: "08:00 - 10:00" },
       // {label: '10:00 - 13:00', value: "10:00 - 13:00" },
@@ -42,9 +46,29 @@ const Cart = (props) => {
     var choosenDate=`${currentDate.getFullYear()}-${('0' + (currentDate.getMonth()+1)).slice(-2)}-${('0' + (currentDate.getDate())).slice(-2)}`;
     _getTimings(choosenDate);
     _getUserDetails();
+    getrewardvalue();
     
-  }, [])
+     }, [])
 
+  const getrewardvalue = () => {
+
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    fetch("http://myviristore.com/admin/api/rewardvalues", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        if (result.status === '1'){
+         setRewardsV(result.data.value)
+       
+        }else{
+          console.log('Please check your API.. ' + result.message);
+        }
+      })
+      .catch(error => console.log('error', error));
+  }
   const _getUserDetails = () => {
       var formdata1 = new FormData();
       formdata1.append("user_id", props.item.userdata.user_id);
@@ -61,6 +85,17 @@ const Cart = (props) => {
         .then(result => {
           if (result.status === '1'){
             props.getUserAddress(result.data);
+            var item;
+            result.data.forEach(
+              function(item){
+                console.log(item);
+                if(item.select_status === 1)
+          {
+            var ad = (item.house_no+","+item.society+","+item.city+","+item.state+","+item.pincode).replace("undefined","").replace(",,",",")
+            setAddress(""+ad)
+          }
+               }
+            )
           }else{
             setErrortext(result.message);
             console.log('Please check your API.. ' + result.message);
@@ -138,6 +173,13 @@ const Cart = (props) => {
 		}
 		return 0;
 	}
+  const TaxesPrice = () => {
+		// const { cartItems } = cartItems;
+		if(cartItemsArray){
+			return cartItemsArray.reduce((sum, item) => sum + (item.qty * ((item.gst*item.price)/100+(item.hst*item.price)/100)), 0 );
+		}
+		return 0;
+	}
 	
     const navigation = props.navigation;
 		const styles = StyleSheet.create({
@@ -161,7 +203,7 @@ const Cart = (props) => {
         .then(result => {
           console.log(result);
           if(result.status == 0){
-            Toast.show(result.message + " Please select future date for delivery date.");
+            //Toast.show(result.message + " Please select future date for delivery date.");
           }else{
             var tempArray=[];
             result.data.map(time => {
@@ -216,6 +258,14 @@ const Cart = (props) => {
 				) : (
 					<ScrollView>	
 						{cartItemsArray && cartItemsArray.map((item, i) => {
+              var taxtype;
+              console.log(item.gst+" "+item.hst)
+              if(item.gst==0){
+                  taxtype = "H"
+              }
+              if(item.hst==0){
+                taxtype = "G"
+            }
               return(
 							<View key={i} style={{flexDirection: 'row', backgroundColor: '#fff', marginBottom: 5,width:"95%",marginLeft:"auto",marginRight:"auto",borderRadius:10}}>
 								
@@ -228,7 +278,8 @@ const Cart = (props) => {
 								  		<Text  >{item.product_name}</Text>
                       <Text  >{item.varients[0].quantity} {item.unit}</Text>
 								  		<Text  >{item.description ? item.description : ''}</Text>
-                      <Text  >${item.qty * item.price}</Text>
+                      <Text  >${item.qty * item.price} {taxtype}</Text>
+                     
 								  	</View>
 								  </View>
                 </View>
@@ -236,21 +287,21 @@ const Cart = (props) => {
                 <View style={{flex:1}}>
                   <View style={{position:"absolute",right:20}}>
 								  	<TouchableOpacity onPress={() => deleteHandler("",item.description,i)}>
-								  		<Text style={{color:"#238A02",fontSize:20}}>x</Text>
+								  		<Text style={{color:"#f2a900",fontSize:20}}>x</Text>
 								  	</TouchableOpacity>
 								  </View>
 
-                  <View style={{flexDirection:"row",borderColor:"#238A02",borderWidth:2,borderRadius:5,padding:5,width:80,justifyContent:"flex-end",position:"absolute",bottom:10}}>
+                  <View style={{flexDirection:"row",borderColor:"#f2a900",borderWidth:2,borderRadius:5,padding:5,width:80,justifyContent:"flex-end",position:"absolute",bottom:10}}>
                     <TouchableOpacity 
                       onPress={() => quantityHandlerForCart('less',"" ,item.description, i)}
                       style={styles.trendingParentView}>
-                      <MaterialIcons name="remove" size={20} color="#238A02" />
+                      <MaterialIcons name="remove" size={20} color="#f2a900" />
                     </TouchableOpacity>
                     <Text style={{paddingHorizontal: 7, color: '#000000', fontSize: 13}}>{item.qty}</Text>
                     <TouchableOpacity 
                       onPress={() => quantityHandlerForCart('more',"" ,item.description, i)}
                       style={styles.trendingParentView}>
-                      <MaterialIcons name="add" size={20} color="#238A02" />
+                      <MaterialIcons name="add" size={20} color="#f2a900" />
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -265,15 +316,17 @@ const Cart = (props) => {
                         <Text style={{color:"black"}}>Order Amount:-</Text>
                         <Text style={{color:"black"}}>Rewards Applied:-</Text>
                         <Text style={{color:"black"}}>Coupon Discount:-</Text>
+                        <Text style={{color:"black"}}>Taxes Charges:-</Text>
                         <Text style={{color:"black"}}>Delivery Charges:-</Text>
                         <Text style={{color:"black",marginTop:2}}>Total Payable Amount:-</Text>
                       </View>
                       <View style={{marginTop:10,marginBottom:10,alignItems:"flex-end",width:"50%"}}>
                         <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{subtotalPrice().toFixed(2)}</Text>
-                        <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{rewardsValue.toFixed(2)}</Text>
+                        <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{rewardsValue*rewardsv}</Text>
                         <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{couponCodeData.discount.toFixed(2)}</Text>
+                        <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{TaxesPrice().toFixed(2)}</Text>
                         <Text style={{color:"#7f7f7f",borderBottomColor:"grey",borderBottomWidth:1}}>{props.item.currency_sign}{props.item.deliveryData.del_charge}.00</Text>
-                        <Text style={{color:"#7f7f7f",marginTop:2}}>{props.item.currency_sign}{(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue).toFixed(2)}</Text>
+                        <Text style={{color:"#7f7f7f",marginTop:2}}>{props.item.currency_sign}{(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2)}</Text>
                       </View>
                   </View>
               </View>
@@ -289,17 +342,17 @@ const Cart = (props) => {
                     props.navigation.navigate("Auth");
                   }
                 }}
-                style={{borderColor:"#238A02",borderWidth:1,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginBottom:10}}>
+                style={{borderColor:"#f2a900",borderWidth:1,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginBottom:10}}>
                 <View 
                   style={{flexDirection:"row",width:"95%",marginLeft:"auto",marginRight:"auto",justifyContent:"center",padding:10,paddingBottom:8,paddingTop:8}}>
-                    <Text style={{flex:8,color:"#238A02",textAlign:"center"}}>Use Rewards ({props.item.userdata.rewards?props.item.userdata.rewards:0})</Text>
+                    <Text style={{flex:8,color:"#f2a900",textAlign:"center"}}>Use Rewards ({props.item.userdata.rewards?props.item.userdata.rewards:0})</Text>
                   <FontAwesome name="chevron-right" color="white" fontSize={40} style={{marginTop:"auto",marginBottom:"auto"}}/>
                 </View>
               </TouchableOpacity>:<View 
-                style={{borderColor:"#238A02",borderWidth:2,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginBottom:10}}>
+                style={{borderColor:"#f2a900",borderWidth:2,borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto",marginBottom:10}}>
                 <View 
                   style={{flexDirection:"row",width:"95%",marginLeft:"auto",marginRight:"auto",justifyContent:"center",padding:10,paddingBottom:8,paddingTop:8}}>
-                    <Text style={{flex:8,color:"#238A02",textAlign:"center"}}>Rewards Applied!!</Text>
+                    <Text style={{flex:8,color:"#f2a900",textAlign:"center"}}>Rewards Applied!!</Text>
                   <FontAwesome name="chevron-right" color="white" fontSize={40} style={{marginTop:"auto",marginBottom:"auto"}}/>
                 </View>
               </View>}
@@ -314,7 +367,7 @@ const Cart = (props) => {
                     props.navigation.navigate("Auth");
                   }
                   }}
-                style={{backgroundColor:"#238A02",borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto"}}>
+                style={{backgroundColor:"#f2a900",borderRadius:10,width:"95%",marginLeft:"auto",marginRight:"auto"}}>
                 <View 
                   style={{flexDirection:"row",width:"95%",marginLeft:"auto",marginRight:"auto",justifyContent:"center",padding:11,paddingBottom:10,paddingTop:10}}>
                   {couponCodeData.couponApplied?<Text style={{flex:8,color:"white"}}>{couponCodeData.couponName} Applied</Text>:<Text style={{flex:8,color:"white"}}>Apply Coupon</Text>}
@@ -331,8 +384,9 @@ const Cart = (props) => {
                                     <View 
                                         key={address.address_id}
                                         style={{width:"95%",marginLeft:"auto",marginRight:"auto",marginBottom:15}}>
+                            
                                         <Text style={{fontWeight:"bold"}}>Name:- {address.receiver_name}</Text>
-                                        <Text style={{color:"black"}}>Address:- {address.house_no}-{address.society},{address.landmark},{address.city},{address.state}-{address.pincode}</Text>
+                                        <Text style={{color:"black"}}>Address:- {addresss}</Text>
                                         <Text style={{color:"black"}}>Contact:- {address.receiver_phone}</Text>
                                     </View>);
                                 }
@@ -352,7 +406,7 @@ const Cart = (props) => {
                         <View >
                           <TouchableOpacity
                            onPress={()=> {props.item.userdata.user_id?props.navigation.navigate("AddressScreen"):props.navigation.navigate("Auth")}}
-                           style={{backgroundColor:"#238A02",borderRadius:10,flex:1,marginBottom:10,padding:10,alignItems:"center",marginLeft:2}}>
+                           style={{backgroundColor:"#f2a900",borderRadius:10,flex:1,marginBottom:10,padding:10,alignItems:"center",marginLeft:2}}>
                               <Text style={{color:"white"}}>Change or Add address</Text>
                           </TouchableOpacity>
                         </View>
@@ -365,8 +419,8 @@ const Cart = (props) => {
                onPress={()=> {
                 setShowDeliveryInstructionButton(false); 
                 setShowDeliverInsInput(!showDeliverInsInput)}}
-               style={{borderColor:"#238A02",borderWidth:2,borderRadius:10,flex:1,marginBottom:20,padding:10,alignItems:"center",width:"90%",marginLeft:"auto",marginRight:"auto"}}>
-                  <Text style={{color:"#238A02"}}>Add Delivery Instructions</Text>
+               style={{borderColor:"#f2a900",borderWidth:2,borderRadius:10,flex:1,marginBottom:20,padding:10,alignItems:"center",width:"90%",marginLeft:"auto",marginRight:"auto"}}>
+                  <Text style={{color:"#f2a900"}}>Add Delivery Instructions</Text>
               </TouchableOpacity>}
               {/* Delivery Instruction Input */}
               {showDeliverInsInput&&
@@ -413,7 +467,7 @@ const Cart = (props) => {
                             marginBottom:5}}>Year</Text>
                         </View>
                         <View style={{flexDirection:"row",width:"95%",marginLeft:"auto",marginRight:"auto"}}>
-                          <Text style={{color:"#238A02",
+                          <Text style={{color:"#f2a900",
                             fontSize:20,
                             flex:1,
                             textAlign:"center",
@@ -423,7 +477,7 @@ const Cart = (props) => {
                             borderTopWidth:1,
                             borderTopColor:"grey",
                             borderBottomColor:"grey"}}>{('0' + (date.getDate())).slice(-2)}</Text>
-                          <Text style={{color:"#238A02",
+                          <Text style={{color:"#f2a900",
                             fontSize:20,
                             flex:1,
                             textAlign:"center",
@@ -433,7 +487,7 @@ const Cart = (props) => {
                             borderTopWidth:1,
                             borderTopColor:"grey",
                             borderBottomColor:"grey"}}>{('0' + (date.getMonth()+1)).slice(-2)}</Text>
-                          <Text style={{color:"#238A02",
+                          <Text style={{color:"#f2a900",
                             fontSize:20,
                             flex:1,
                             textAlign:"center",
@@ -447,7 +501,7 @@ const Cart = (props) => {
                       </View>
                     </View>
                     
-                    <TouchableOpacity onPress={showDatepicker} style={{backgroundColor:"#238A02",padding:10,marginTop:10,marginBottom:10,borderRadius:10,width:"90%",marginLeft:"auto",marginRight:"auto"}}>
+                    <TouchableOpacity onPress={showDatepicker} style={{backgroundColor:"#f2a900",padding:10,marginTop:10,marginBottom:10,borderRadius:10,width:"90%",marginLeft:"auto",marginRight:"auto"}}>
                       <Text style={{color:"white",textAlign:"center"}}>Choose a delivery date</Text>
                     </TouchableOpacity>
                   </View>
@@ -472,8 +526,8 @@ const Cart = (props) => {
                       initial={0}
                       onPress={(value) => {changeRadioValue(value)}}
                       borderWidth={1}
-                      buttonColor={'#238A02'}
-                      // buttonOuterColor={"#238A02"}
+                      buttonColor={'#f2a900'}
+                      // buttonOuterColor={"#f2a900"}
                       labelColor={"grey"}
                       buttonSize={15}
                       buttonOuterSize={25}
@@ -488,11 +542,11 @@ const Cart = (props) => {
 				
 				{!cartItemsIsLoading &&
 					<View style={{backgroundColor: '#fff', paddingVertical: 5}}>
-						<View style={{flexDirection: 'row', height: 45, backgroundColor: '#238A02'}}>
+						<View style={{flexDirection: 'row', height: 45, backgroundColor: '#f2a900'}}>
 							<View style={{flexDirection: 'row', flexGrow: 1, flexShrink: 1, justifyContent: 'space-between', alignItems: 'center'}}>
 								<View style={{flexDirection: 'row', paddingRight: 20, alignItems: 'center'}}>
 									<Text style={{color: '#FFFFFF', fontWeight: 'bold'}}>SubTotal: </Text>
-									<Text style={{color: '#FFFFFF', fontWeight: 'bold'}}>${((subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue).toFixed(2)) > 0?(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue).toFixed(2):0}</Text>
+									<Text style={{color: '#FFFFFF', fontWeight: 'bold'}}>${((subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2)) > 0?(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2):0}</Text>
 								</View>
                 <TouchableOpacity style={[styles.centerElement, {width: 100, height: 45, borderRadius: 5}]} 
                     onPress={() => {
@@ -537,7 +591,7 @@ const Cart = (props) => {
             Please add some of the items in cart that will appear here
           </Text>
         </View>
-        <View style={{backgroundColor: '#238A02',
+        <View style={{backgroundColor: '#f2a900',
                       borderWidth: 0,
                       color: '#FFFFFF',
                       borderColor: '#7DE24E',
@@ -596,7 +650,7 @@ const styles = StyleSheet.create({
     marginBottom:5
   },
   dateStyle:{
-    color:"#238A02",
+    color:"#f2a900",
     fontSize:20,
     flex:1,
     textAlign:"center",
@@ -622,7 +676,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   rechargebutton: {
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',
@@ -646,7 +700,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     margin: 5,
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",

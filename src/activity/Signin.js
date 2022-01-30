@@ -26,7 +26,8 @@ const Signin = (props) => {
   const navigation = props.navigation;
   const passwordInputRef = createRef();
   const [animating, setAnimating] = useState(true);
-
+  const [token, setToken] = useState('');
+  
 
   var FB_APP_ID = '1875984902575389';
 
@@ -39,8 +40,10 @@ const Signin = (props) => {
       console.log(e);
     }
   };
+  
 
   useEffect(() => {
+  
     //initSocialLogin()
     /*if(props.item.userdata.first_name)
     {
@@ -50,11 +53,16 @@ const Signin = (props) => {
       props.getNotifyByData(_retrieveData("notifyUser"));
       props.navigation.replace("DrawerNavigationRoutes")
     }*/
-      
+  
+    
     props.getUserData({});
     props.getUserAddress([]);
     props.getNotifyByData({});
     removeId('userId');
+
+
+    readData()
+
   }, []);
    const removeId =async (key) =>{
     try {
@@ -64,6 +72,18 @@ const Signin = (props) => {
     catch(exception) {
         return false;
     }
+}
+const readData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('token');
+    if(value !== null){
+      console.log("token is " + value);  
+      setToken(value);
+    }else{
+    }
+  } catch (e) {
+    console.log('Failed to fetch the data from storage');
+  }
 }
   const googleLogin = async () => {
     try {
@@ -130,6 +150,8 @@ const Signin = (props) => {
 
 
   const handleSubmitPress = async () => {
+    console.log("token is * " + token); 
+
     setErrortext('');
     if (!email) {
       alert('Please fill Phone Number');
@@ -139,9 +161,10 @@ const Signin = (props) => {
       alert('Please fill Password');
       return;
     }
+    
     setLoading(true);
     var user_id;
-    let dataToSend = {user_phone: email, user_password: password, device_id: "corAw1y1S2W902cne0Pg"};
+    let dataToSend = {user_phone: email, user_password: password, device_id: token};
     let formBody = [];
     for (let key in dataToSend) {
       let encodedKey = encodeURIComponent(key);
@@ -255,7 +278,7 @@ const Signin = (props) => {
                 </View>
 
                 <View style={styles.SectionStyle}>
-                    <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#238A02" />
+                    <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#f2a900" />
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="Phone Number"
@@ -274,7 +297,7 @@ const Signin = (props) => {
                 </View>
 
                 <View style={styles.SectionStyle}>
-                    <Entypo style={styles.keyIcon} name="key" size={20} color="#238A02" />
+                    <Entypo style={styles.keyIcon} name="key" size={20} color="#f2a900" />
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="Password"
@@ -287,7 +310,7 @@ const Signin = (props) => {
                         blurOnSubmit={false}
                         returnKeyType="next"
                     />
-                    <FontAwesome style={styles.keyIcon} name={hidePass ? 'eye-slash' : 'eye'} size={20} color="#238A02" onPress={() => setHidePass(!hidePass)} />
+                    <FontAwesome style={styles.keyIcon} name={hidePass ? 'eye-slash' : 'eye'} size={20} color="#f2a900" onPress={() => setHidePass(!hidePass)} />
                     
                 </View>
 
@@ -299,7 +322,7 @@ const Signin = (props) => {
 
                 <TouchableOpacity 
                     style={{
-                      backgroundColor: '#238A02',
+                      backgroundColor: '#f2a900',
                       padding: 5,
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -407,7 +430,7 @@ const styles = StyleSheet.create({
     borderColor: '#dadae8',
   },
   buttonStyle: {
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',
@@ -474,7 +497,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   skipText:{
-    color: "#238A02",
+    color: "#f2a900",
     alignItems: "flex-end",
     marginTop: 30,
     fontSize: 15,
@@ -487,7 +510,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     color: '#FFFFFF',
-    backgroundColor: "#238A02",
+    backgroundColor: "#f2a900",
     marginTop: 20,
   },
 });

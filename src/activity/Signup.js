@@ -118,7 +118,7 @@ const Signup = ({ navigation }) => {
                 </View>
 
                 <View style={styles.SectionStyle}>
-                    <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#238A02" />
+                    <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#f2a900" />
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="First Name"
@@ -136,7 +136,7 @@ const Signup = ({ navigation }) => {
                 </View>
 
                 <View style={styles.SectionStyle}>
-                    <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#238A02" />
+                    <FontAwesome style={styles.keyIcon} name="user-circle" size={20} color="#f2a900" />
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="Last Name"
@@ -155,7 +155,7 @@ const Signup = ({ navigation }) => {
                 </View>
 
                 <View style={styles.SectionStyle}>
-                    <SimpleLineIcons style={styles.keyIcon} name="screen-smartphone" size={20} color="#238A02" />
+                    <SimpleLineIcons style={styles.keyIcon} name="screen-smartphone" size={20} color="#f2a900" />
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="Mobile Number"
@@ -175,7 +175,7 @@ const Signup = ({ navigation }) => {
                 </View>
 
                 <View style={styles.SectionStyle}>
-                    <MaterialIcons style={styles.keyIcon} name="email" size={20} color="#238A02" />
+                    <MaterialIcons style={styles.keyIcon} name="email" size={20} color="#f2a900" />
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="Email ID"
@@ -195,7 +195,7 @@ const Signup = ({ navigation }) => {
                 </View>
 
                 <View style={styles.SectionStyle}>
-                    <Entypo style={styles.keyIcon} name="key" size={20} color="#238A02" />
+                    <Entypo style={styles.keyIcon} name="key" size={20} color="#f2a900" />
                     <TextInput
                         style={styles.inputStyle}
                         placeholder="Password"
@@ -209,7 +209,7 @@ const Signup = ({ navigation }) => {
                         blurOnSubmit={false}
                         returnKeyType="next"
                     />
-                    <FontAwesome style={styles.keyIcon} name={hidePass ? 'eye-slash' : 'eye'} size={20} color="#238A02" onPress={() => setHidePass(!hidePass)} />
+                    <FontAwesome style={styles.keyIcon} name={hidePass ? 'eye-slash' : 'eye'} size={20} color="#f2a900" onPress={() => setHidePass(!hidePass)} />
                 </View>
 
                 <View style={styles.checkboxContainer}>
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     borderColor: '#dadae8',
   },
   buttonStyle: {
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   skipText:{
-    color: "#238A02",
+    color: "#f2a900",
     alignItems: "flex-end",
     marginTop: 20,
     fontSize: 15,
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     color: '#FFFFFF',
-    backgroundColor: "#238A02",
+    backgroundColor: "#f2a900",
     marginTop: 10,
   },
   checkboxContainer: {

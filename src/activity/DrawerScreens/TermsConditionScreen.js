@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   rechargebutton: {
-    backgroundColor: '#238A02',
+    backgroundColor: '#f2a900',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',

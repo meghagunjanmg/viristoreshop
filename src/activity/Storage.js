@@ -16,7 +16,7 @@ const _retrieveData = async (key) => {
         const value = await AsyncStorage.getItem(key);
         if (value !== null) {
             // Our data is fetched successfully
-            console.log("values are from storage data >>> " + value);
+            console.log("values are from storage data >>> " + key + value);
             return value;
         }
     } catch (error) {

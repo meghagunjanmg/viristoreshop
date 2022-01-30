@@ -10,6 +10,11 @@ import DropDownPicker from 'react-native-dropdown-picker';
 const AddAddressScreen = (props) => {
     const index = props.route.params.index;
     const addressDetails= props.route.params.selectedAddress;
+    useEffect(() => {
+        changeAddress()
+          }, [])
+    console.log(addressDetails)
+
     const [addressData,changeAddressData] = useState(props.item.userAddressData);
     const [pincode, setPincode] = useState(props.route.params.selectedAddress.pincode);
     const [address1, setAddress1] = useState(props.route.params.selectedAddress.house_no);
@@ -27,6 +32,7 @@ const AddAddressScreen = (props) => {
     const phoneInputRef = createRef();
     const alternatePhoneInputRef = createRef();
 
+   
    
     const saveAddress = () => {
         setErrortext('');
@@ -47,15 +53,16 @@ const AddAddressScreen = (props) => {
             return;
         }
         if (!landmark) {
-            setLandmark("");
+            setLandmark(" ");
         }
         setLoading(true);
         var url;
         var dataToSend;
         if(props.route.params.selectedAddress != ""){
+           
             url = 'http://myviristore.com/admin/api/edit_address';
 
-            dataToSend = {address_id: props.route.params.selectedAddress.address_id, 
+            dataToSend = {address_id: props.route.params.selectedAddress, 
                 user_id: props.item.userdata.user_id, receiver_name: name,
                 receiver_phone: phoneNumber,
                 city_name: city, society_name: city, 
@@ -95,27 +102,7 @@ const AddAddressScreen = (props) => {
         }).then((response) => response.json()).then((responseJson) => {
             //Hide Loader
             setLoading(false);
-            console.log(responseJson);
-            if(addressDetails != "")
-            {
-                const addressValue = {address_id: props.route.params.selectedAddress.address_id, 
-                    user_id: props.item.userAddressData[0].user_id, receiver_name: name,
-                    receiver_phone: phoneNumber,
-                    city: city, society: city, 
-                    house_no: address1, landmark: landmark, 
-                    state: province, pincode: pincode, 
-                    lat: props.item.latitude, lng: props.item.longitude,
-                    added_at: addressData[index].added_at,
-                    distance: addressData[index].distance,
-                    select_status: addressData[index].select_status,
-                    updated_at: addressData[index].updated_at
-                    };
-                const newAddressdata = Object.assign({}, addressValue);
-                addressData[index] = newAddressdata;
-               
-                props.getUserAddress(addressData);
-            }
-            else
+            console.log(responseJson)
             {
                 var index=addressData.length;
                 var formdata1 = new FormData();
@@ -148,6 +135,35 @@ const AddAddressScreen = (props) => {
 
     }
     
+
+    const changeAddress = () => {
+        var index=addressData.length;
+        var formdata1 = new FormData();
+        formdata1.append("user_id", props.item.userdata.user_id);
+        formdata1.append("store_id", props.item.homepageData.recent_selling[0].store_id);
+        var requestOptions = {
+          method: 'POST',
+          body: formdata1,
+          redirect: 'follow'
+        };
+        fetch("http://myviristore.com/admin/api/show_address", requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            props.getUserAddress(result.data)
+
+            for(var i = 0;i<result.data.length;i++){
+                if(result.data[i].address_id==addressDetails){
+                console.log(result.data[i].house_no);
+                setAddress1(result.data[i].house_no)
+                setAddress2(result.data[i].society)
+                setCity(result.data[i].city)
+                setPincode(result.data[i].pincode)
+
+                }
+        }
+          })
+          .catch(error => console.log('error', error));
+    }
     return(
         <View>
             <ScrollView>
@@ -318,7 +334,7 @@ const mapStateToProps = (state) => {
         margin: 10,
     },
     buttonStyle: {
-        backgroundColor: '#238A02',
+        backgroundColor: '#f2a900',
         borderWidth: 0,
         color: '#FFFFFF',
         borderColor: '#7DE24E',

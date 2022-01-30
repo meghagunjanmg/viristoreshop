@@ -189,7 +189,7 @@ const DemoScreen = (props) => {
                   </View>
                   <TouchableOpacity
                       onPress={() => setCount(2)}
-                      style={{padding:10,backgroundColor:"#238A02",flex:1,borderRadius:50}}>
+                      style={{padding:10,backgroundColor:"#f2a900",flex:1,borderRadius:50}}>
                       <Text style={{textAlign:"center",color:"white"}}>Next</Text>
                   </TouchableOpacity>
               </View>
@@ -213,7 +213,7 @@ const DemoScreen = (props) => {
                   </View>
                   <TouchableOpacity
                       onPress={() => setCount(3)}
-                      style={{padding:10,backgroundColor:"#238A02",flex:1,borderRadius:50}}>
+                      style={{padding:10,backgroundColor:"#f2a900",flex:1,borderRadius:50}}>
                       <Text style={{textAlign:"center",color:"white"}}>Next</Text>
                   </TouchableOpacity>
               </View>
@@ -242,7 +242,7 @@ const DemoScreen = (props) => {
                           .catch(err => console.log(err));
                         props.navigation.replace("Auth")
                       }}
-                      style={{padding:10,backgroundColor:"#238A02",flex:1,borderRadius:50}}>
+                      style={{padding:10,backgroundColor:"#f2a900",flex:1,borderRadius:50}}>
                       <Text style={{textAlign:"center",color:"white"}}>Start</Text>
                   </TouchableOpacity>
               </View>
@@ -262,7 +262,7 @@ const DemoScreen = (props) => {
 //3rd
 //#f9b765
 //final
-//#238A02
+//#f2a900
 const mapStateToProps = (state) => {
     // console.log("State Contains:-"+ state)
     // console.log(`Map State to props:- ${state.item.homepageData.status}`)

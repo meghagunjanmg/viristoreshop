@@ -97,7 +97,7 @@ const OrderScreen = (props) => {
           key={order.cart_id} 
           style={styles.topbar} >
             <View style={{marginTop:10,marginBottom:10}}>
-              <Text style={{color:"#238A02",}}>Payment method:- {order.payment_method}</Text>
+              <Text style={{color:"#f2a900",}}>Payment method:- {order.payment_method}</Text>
               <Text style={{color:"#7f7f7f"}}>Estimated Delivery:- {order.delivery_date}</Text>
             </View>
             <View style={{flexDirection:"row",borderBottomColor:"grey",borderBottomWidth:2,borderTopColor:"grey",borderTopWidth:2}}>
@@ -109,7 +109,7 @@ const OrderScreen = (props) => {
               </View>
   
               <View style={{padding:10,width:"50%",alignItems:"center"}}>
-                <Text style={{color:"#238A02"}}>Order Status</Text>
+                <Text style={{color:"#f2a900"}}>Order Status</Text>
                 <Text style={{color:"#7f7f7f",fontWeight:"bold"}}>{order.order_status}</Text>
               </View>
             </View>
@@ -142,7 +142,7 @@ const OrderScreen = (props) => {
   
               <TouchableOpacity 
                 onPress={() => props.navigation.navigate("OrderDetailsScreen", {screen: "OrderDetailsScreen", params: {data:order.data}})} 
-                style={{backgroundColor:"#238A02",width: "48%",padding:10,borderRadius:50,alignItems:"center"}}>
+                style={{backgroundColor:"#f2a900",width: "48%",padding:10,borderRadius:50,alignItems:"center"}}>
                 <Text style={{color:"white"}}>Order Details</Text>
               </TouchableOpacity>
             </View>
@@ -184,7 +184,7 @@ const OrderScreen = (props) => {
           key={order.cart_id} 
           style={styles.topbar} >
             <View style={{marginTop:10,marginBottom:10}}>
-              <Text style={{color:"#238A02",}}>Payment method:- {order.payment_method}</Text>
+              <Text style={{color:"#f2a900",}}>Payment method:- {order.payment_method}</Text>
               <Text style={{color:"#7f7f7f"}}>Estimated Delivery:- {order.delivery_date}</Text>
             </View>
             <View style={{flexDirection:"row",borderBottomColor:"grey",borderBottomWidth:2,borderTopColor:"grey",borderTopWidth:2}}>
@@ -196,7 +196,7 @@ const OrderScreen = (props) => {
               </View>
   
               <View style={{padding:10,width:"50%",alignItems:"center"}}>
-                <Text style={{color:"#238A02"}}>Order Status</Text>
+                <Text style={{color:"#f2a900"}}>Order Status</Text>
                 <Text style={{color:"#7f7f7f",fontWeight:"bold"}}>{order.order_status}</Text>
               </View>
             </View>
@@ -217,7 +217,7 @@ const OrderScreen = (props) => {
             <View style={{flexDirection:"row",marginBottom:10}}>
               <TouchableOpacity 
                 onPress={() => props.navigation.navigate("OrderDetailsScreen", {screen: "OrderDetailsScreen", params: {data:order.data}})} 
-                style={{backgroundColor:"#238A02",width: "95%",padding:10,borderRadius:50,alignItems:"center"}}>
+                style={{backgroundColor:"#f2a900",width: "95%",padding:10,borderRadius:50,alignItems:"center"}}>
                 <Text style={{color:"white"}}>Order Details</Text>
               </TouchableOpacity>
             </View>
@@ -244,7 +244,7 @@ const OrderScreen = (props) => {
     <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: 'red',borderBottomColor:"red",borderBottomWidth:2 }}
-      style={{ backgroundColor: '#238A02'}}
+      style={{ backgroundColor: '#f2a900'}}
     />
   );
 

@@ -33,7 +33,7 @@ const MainStackNavigator = (navigation) => {
               <NavigationDrawerHeader navigationProps={navigation} />
             ),
             headerStyle: {
-              backgroundColor: '#238A02', //Set Header color
+              backgroundColor: '#f2a900', //Set Header color
             },
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
@@ -56,7 +56,7 @@ const SettingsStackNavigator = (navigation) => {
                 <FontAwesome style={styles.keyIcon} name="user-circle" size={24} color="#2C2A2A" />
             ), //Set Header right icon
             headerStyle: {
-              backgroundColor: '#238A02', //Set Header color
+              backgroundColor: '#f2a900', //Set Header color
             },
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {

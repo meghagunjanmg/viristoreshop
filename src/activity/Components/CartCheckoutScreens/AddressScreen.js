@@ -17,6 +17,7 @@ import Toast from 'react-native-simple-toast';
 
 const AddressScreen = (props) => {
   const [refreshing, setRefreshing] = useState(true);
+  const [dataSourc, setDataSourc] = useState([]);
   const [dataSource, setDataSource] = useState([]);
 
   useEffect(() => {
@@ -39,8 +40,27 @@ const AddressScreen = (props) => {
        .then((response) => response.json())
        .then((responseJson) => {
          setRefreshing(false);
-         setDataSource(responseJson.data);
-         console.log(responseJson.formdata1);
+         setDataSourc(responseJson.data);
+         var item;
+         const datas = [];
+         for(var i=0;i<responseJson.data.length;i++)
+    {
+      item = responseJson.data[i];
+                var ad = (item.house_no+","+item.society+","+item.city+","+item.state+","+item.pincode).replace("undefined","").replace(",,",",")
+                console.log(ad);
+                var newObj = { // Change your required detail here
+                  receiver_name: item.receiver_name,
+                  receiver_phone: item.receiver_phone,
+                  address_id: item.address_id,
+                  address: ad,
+                  select_status:item.select_status   
+              }
+                datas.push(newObj)
+              }
+            
+            setDataSource(datas);
+
+         console.log(datas);
        })
        .catch((error) => {
          console.error(error);
@@ -107,11 +127,11 @@ const handleDeleteAddress = (address_id) => {
     return(<View key={item.address_id} style={{width:"95%",marginLeft:"auto",marginRight:"auto",backgroundColor:"white",borderRadius:7,marginTop:20,marginBottom:20,elevation:10,padding:10}}>
     <View style={{width:"95%",marginLeft:"auto",marginRight:"auto",marginBottom:15}}>
         <Text style={{fontWeight:"bold"}}>Name:- {item.receiver_name}</Text>
-        <Text style={{color:"#7f7f7f"}}>Address:- {item.house_no}-{item.society},{item.landmark},{item.city},{item.state}-{item.pincode}</Text>
+        <Text style={{color:"#7f7f7f"}}>Address:- {item.address}</Text>
         <Text style={{color:"#7f7f7f"}}>Contact:- {item.receiver_phone}</Text>
     </View>
     <TouchableOpacity style={{backgroundColor:"#238A02",width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}
-     onPress={()=> props.navigation.navigate("AddAddressScreen", {selectedAddress: item,index:i})}>
+     onPress={()=> props.navigation.navigate("AddAddressScreen", {selectedAddress: item.address_id})}>
         <Text style={{color:"white"}}>Change Address</Text>
     </TouchableOpacity>
     <TouchableOpacity style={{backgroundColor:"#238A02",width:"95%",marginBottom:10,marginLeft:"auto",marginRight:"auto",padding:10,alignItems:"center",borderRadius:10}}

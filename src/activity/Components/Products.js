@@ -139,7 +139,7 @@ const Products = (props) => {
       <ScrollView 
         showsVerticalScrollIndicator ={false}
         showsHorizontalScrollIndicator={false}>
-            <Text style={{backgroundColor:"white",elevation:10,textAlign:"center",paddingTop:20,marginBottom:20,borderBottomColor:"#238A02",width:"100%",marginLeft:"auto",marginRight:"auto",borderBottomWidth:2,paddingBottom:10,color:"#238A02",fontSize:20}}>
+            <Text style={{backgroundColor:"white",elevation:10,textAlign:"center",paddingTop:20,marginBottom:20,borderBottomColor:"#f2a900",width:"100%",marginLeft:"auto",marginRight:"auto",borderBottomWidth:2,paddingBottom:10,color:"#f2a900",fontSize:20}}>
               {title}
             </Text>
             {/* Search Bar */}
@@ -171,20 +171,20 @@ const Products = (props) => {
                           />  
                           {productData.qty == 0
                           ?<TouchableOpacity 
-                              style={[styles.trendingParentView,{backgroundColor: '#238A02'}]} 
+                              style={[styles.trendingParentView,{backgroundColor: '#f2a900'}]} 
                               onPress={() => quantityHandler('more', "" , productData.description,i)}>
                               <FontAwesome name="plus-circle" size={15} color="#FFFFFF"  />
                             </TouchableOpacity>
                           :<View style={{width: 40, position: "absolute", right: 0}}>
                             <TouchableOpacity 
                               onPress={() => quantityHandler('more', "" , productData.description,i)} 
-                              style={[styles.trendingParentView, {position: "relative",backgroundColor: '#238A02'}]}>
+                              style={[styles.trendingParentView, {position: "relative",backgroundColor: '#f2a900'}]}>
                               <MaterialIcons name="add" size={15} color="#FFFFFF" />
                             </TouchableOpacity>
                             <Text style={[styles.trendingParentView2, { position: "relative", fontSize: 13}]}>{productData.qty}</Text>
                             <TouchableOpacity 
                               onPress={() => quantityHandler('less', "" , productData.description,i)} 
-                              style={[styles.trendingParentView, {position: "relative",backgroundColor: '#238A02'}]}>
+                              style={[styles.trendingParentView, {position: "relative",backgroundColor: '#f2a900'}]}>
                               <MaterialIcons name="remove" size={15} color="#FFFFFF" />
                             </TouchableOpacity>
                           </View> }
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     margin: 5,
-    // backgroundColor: '#238A02',
+    // backgroundColor: '#f2a900',
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
