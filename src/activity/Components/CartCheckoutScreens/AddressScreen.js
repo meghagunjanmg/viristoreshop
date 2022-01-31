@@ -84,9 +84,10 @@ const AddressScreen = (props) => {
             {
                 Toast.show("Address Selected Successfully!!");
                 getData();
+                props.navigation.navigate("CartScreen");
+
             }
           else
-            Toast.show("We are encountring error while updating data!!");
             props.navigation.navigate("CartScreen");
         })
       .catch(error => {

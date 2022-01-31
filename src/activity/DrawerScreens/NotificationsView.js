@@ -69,7 +69,8 @@ const deleteAll = () => {
     })
     .then((response) => response.json())
     .then((responseJson) => {
-       
+      console.log(responseJson);
+      setData(data[0])
     })
     .catch((error) => {
         console.error(error);

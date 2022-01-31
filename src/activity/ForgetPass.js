@@ -14,6 +14,44 @@ const ForgetPass = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const forgetpassword = () =>
+{
+  let dataToSend = {user_phone: email};
+  let formBody = [];
+  for (let key in dataToSend) {
+    let encodedKey = encodeURIComponent(key);
+    let encodedValue = encodeURIComponent(dataToSend[key]);
+    formBody.push(encodedKey + '=' + encodedValue);
+  }
+  formBody = formBody.join('&');
+
+   fetch('http://myviristore.com/admin/api/forget_password', {
+    method: 'POST',
+    body: formBody,
+    headers: {
+      //Header Defination
+      'Content-Type':
+      'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      //Hide Loader
+      //console.log(responseJson);
+      // If server response message same as Data Matched
+      if (responseJson.status === '1') {
+        console.log(responseJson.data);
+        navigation.navigate("Auth")
+      } else {
+        console.log('Please check your phone number');
+      }
+    })
+    .catch((error) => {
+      //Hide Loader
+      console.error(error);
+    });
+}
+
   return (
     <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollView}>
@@ -42,7 +80,8 @@ const ForgetPass = ({ navigation }) => {
                     />
                 </View>
 
-                <TouchableOpacity style={styles.loginBtn}>
+                <TouchableOpacity  
+                onPress={forgetpassword} style={styles.loginBtn}>
                     <Text style={styles.loginText}>VERIFY</Text>
                 </TouchableOpacity>
 
