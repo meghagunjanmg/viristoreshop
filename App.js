@@ -2,6 +2,7 @@
 import 'react-native-gesture-handler';
 import React, {useEffect, useState} from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
+import { Alert } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons'; 
@@ -392,7 +393,14 @@ const App = (props) => {
     console.log("For testing purpose end");
 
     firebasenotification()
-
+    
+      const unsubscribe = messaging().onMessage(async remoteMessage => {
+        PushNotification.localNotification({
+          title:remoteMessage.notification.title,
+          message:remoteMessage.notification.body
+        });
+      });
+      return unsubscribe;
   }, []);
 
  // async function registerAppWithFCM() {  messaging().setAutoInitEnabled(true) }
@@ -414,18 +422,19 @@ PushNotification.configure({
     console.log("NOTIFICATION:", notification);
     this.setState({
       pushNotification: notification,
-      visible: true
+      visible: true,
     });
     // process the notification
 
     // (required) Called when a remote is received or opened, or local notification is opened
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
-
     if (notification.foreground) {
       PushNotification.localNotification({
-          title:notification.title,
-          message:notification.message
+        title:notification.title,
+        message:notification.message
       });
+
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+
    } 
   },
 
@@ -447,6 +456,7 @@ PushNotification.configure({
     alert: true,
     badge: true,
     sound: true,
+    foreground:true
   },
 
   // Should the initial notification be popped automatically
@@ -461,6 +471,7 @@ PushNotification.configure({
    *     requestPermissions: Platform.OS === 'ios'
    */
   requestPermissions: true,
+
 });
   }
 

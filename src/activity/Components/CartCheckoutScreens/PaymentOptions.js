@@ -424,6 +424,7 @@ const PaymentOptions = (props) =>
           .then(result => {
              console.log("The checkout formdata is:-"+JSON.stringify(formdata));
             if(result.status == "2" || result.status == "1"){
+                console.log('checkout ', result)
               setLoading(false);
               var temparray=[];
               props.updatedCart(temparray);
