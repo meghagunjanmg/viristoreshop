@@ -158,6 +158,7 @@ const AddAddressScreen = (props) => {
                 setAddress2(result.data[i].society)
                 setCity(result.data[i].city)
                 setPincode(result.data[i].pincode)
+                setProvince(result.data[i].state)
 
                 }
         }
