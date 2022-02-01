@@ -65,7 +65,7 @@ const AddAddressScreen = (props) => {
             dataToSend = {address_id: props.route.params.selectedAddress, 
                 user_id: props.item.userdata.user_id, receiver_name: name,
                 receiver_phone: phoneNumber,
-                city_name: city, society_name: city, 
+                city_name: city, society_name: address2, 
                 house_no: address1, landmark: landmark, 
                 state: province, pin: pincode, 
                 lat: props.item.latitude, lng: props.item.longitude};
@@ -75,7 +75,7 @@ const AddAddressScreen = (props) => {
 
             dataToSend = {user_id: props.item.userdata.user_id, receiver_name: name,
                 receiver_phone: phoneNumber,
-                city_name: city, society_name: city, 
+                city_name: city, society_name: address2, 
                 house_no: address1, landmark: landmark, 
                 state: province, pin: pincode, 
                 lat: props.item.latitude, lng: props.item.longitude};
