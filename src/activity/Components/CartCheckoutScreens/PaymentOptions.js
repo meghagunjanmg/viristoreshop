@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import { StyleSheet, SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image, ActivityIndicator, Alert, Modal } from 'react-native';
+import {CheckBox, StyleSheet, SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image, ActivityIndicator, Alert, Modal } from 'react-native';
 import { MaterialIcons, Ionicons, AntDesign } from '@expo/vector-icons';
 import {connect} from "react-redux";
 import {getItems,getLocation,updatedCart,getHomescreenData,getUserAddress,getOrderDetailsData,getCouponDiscount} from "../../../actions/itemsAction";
@@ -35,6 +35,12 @@ const PaymentOptions = (props) =>
     var [successModal, setSuccessModal] = useState(false);
     var [couponCodeData,setCouponCodeData] = useState(props.item.couponDiscount);
     var [rewardsValue,setRewardsValue] = useState(props.route.params.rewardsValue);
+    var [amount,setAmount] = useState("");
+
+    var [rew,setRew] = useState("");
+    var [coupon,setCoupon] = useState("");
+
+
 
     const redeemRewards = () =>{
         setLoading(true);
@@ -139,6 +145,25 @@ const PaymentOptions = (props) =>
         
         });
         setLoading(false);
+
+       
+
+        amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
+        setAmount(amount)
+    
+        if(props.route.params.rewardsValue!=null)
+{
+     setRew("0")
+}else{
+    setRew("1")
+}
+if(props.route.params.couponCodeData.couponName!=null)
+{
+    setCoupon("0")
+}else{
+    setCoupon(props.route.params.couponCodeData.couponName)
+}
+    
     }, []);
 
     const _getPaymentMethod = async () => {
@@ -226,8 +251,12 @@ const PaymentOptions = (props) =>
             store_id:  props.item.homepageData.recent_selling[0].store_id,
             user_id: props.item.userdata.user_id,
             delivery_instructions: props.route.params.orderDetails.del_ins,
-            order_array: JSON.stringify(tempArray)
+            order_array: JSON.stringify(tempArray),
+            rewards:rew,
+            coupon_code:coupon
         };
+
+        //console.error(dataToSend)
 
         let formBody = [];
         for (let key in dataToSend) {
@@ -315,10 +344,19 @@ const PaymentOptions = (props) =>
     }; 
 
     const walletRadioButtonPress = () => {
+      
         if(isCheckedWallet)
-            setCheckedWallet(false);
+            {
+                setCheckedWallet(false);
+            }
         else {
             setCheckedWallet(true);
+        
+            setShowPayNowButton(true)
+            if(props.item.userdata.wallet <= amount){
+                amount = (amount-props.item.userdata.wallet).toFixed(2);
+                setAmount(amount)
+            }
         }
     }
 
@@ -332,7 +370,9 @@ const PaymentOptions = (props) =>
             setCheckedCard(false);
             setShowPayNowButton(true);
         }
-
+        amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
+        setAmount(amount)
+        
     }
 
     const cardRadioButtonPress = () => {
@@ -344,6 +384,8 @@ const PaymentOptions = (props) =>
             setCheckedCard(true);
             setShowPayNowButton(false);
         }
+        amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
+        setAmount(amount)
     }
 
     const handlePayNowButton = () =>{
@@ -353,7 +395,7 @@ const PaymentOptions = (props) =>
             setLoading(true);
             console.log("Handle payment called")
             var formdata = new FormData();
-            let amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue).toFixed(2);
+            let amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
             formdata.append("amount", amount*100);
             formdata.append("currency", props.item.currency_name);
             formdata.append("token", token);
@@ -367,7 +409,7 @@ const PaymentOptions = (props) =>
             fetch("http://myviristore.com/admin/api/stripe_api", requestOptions)
               .then(response => response.json())
               .then(result => {
-                console.log(result.status);
+                console.log(result.stat1us);
                 if(result.status == "succeeded"){
                   console.log(result.payment_method_details.type);
                   setPaymentMethod(result.payment_method_details.type);
@@ -394,7 +436,8 @@ const PaymentOptions = (props) =>
         }
         else if(isCheckedWallet ===true)
         {
-
+            if(amount==0) handleCheckOutAPI("COD", "success");
+            else handleCheckOutAPI("COD", "pending");
         }
     }
     const handleCheckOutAPI = (method, status) => {
@@ -498,18 +541,33 @@ const PaymentOptions = (props) =>
         <SafeAreaView style={styles.container}>
             <Loader loading={loading} />
             <ScrollView>
-                <View>
-                    <Text style={styles.paymentTitle}>Payment Method</Text>
-                </View>
+                         
                 <TouchableOpacity {...touchWalletProps}>
-                    <View style={[styles.radioButtonTextContainer]}>
-                        <Text style={styles.radioButtonText}>Use Wallet Balance</Text>
-                        <Text>{props.item.currency_sign} {(props.item.userdata.wallet).toFixed(2)}</Text>
+                <View style={[styles.radioButtonTextContainer]}>
+                        <Text style={styles.radioButtonText}>Use Wallet</Text>
+                        <Text style={styles.radioButtonText}>{props.item.currency_sign} {(props.item.userdata.wallet).toFixed(2)}</Text>
                     </View>
-                    <View style={[styles.radioButtonIcon]}>
-                        {_renderCheckedViewWallet()}
-                    </View>                    
+                    <View style={[styles.checkbox]}>
+        <CheckBox
+          value={isCheckedWallet}
+          onValueChange={_renderCheckedViewWallet()}
+          style={styles.checkbox}
+        />
+      </View>    
+              
                 </TouchableOpacity>
+                {
+          isCheckedWallet ?
+          <View>
+                <View>
+                <Text>Choose Method to Pay Remaining Amount: {props.item.currency_sign} {(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2)}</Text>
+                </View>
+              </View>
+              :
+              <View>
+
+              </View>
+      }       
                 <TouchableOpacity {...touchCODProps}>
                     <View style={[styles.radioButtonTextContainer]}>
                         <Text style={styles.radioButtonText}>Cash on delivery</Text>
@@ -624,7 +682,7 @@ const PaymentOptions = (props) =>
             <View style={{flexDirection:"row",position:"relative",bottom:0}}>
                 <View style={{flex:2}}>
                     <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15}}>Total Amount:</Text>
-                    <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15,color:"grey"}}>{props.item.currency_sign}{(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2)}</Text>
+                    <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15,color:"grey"}}>{props.item.currency_sign}{amount}</Text>
                 </View>
 
                 {showPayNowButton?<TouchableOpacity
@@ -800,4 +858,23 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
     },
+
+    textStyle1: {
+        fontSize:16,
+        textAlign: "center",
+        flexDirection:"row-reverse"
+    },
+
+    checkboxContainer: {
+        flexDirection: "row",
+      },
+      checkbox: {
+        alignSelf: "center",
+        color:"green"
+      },
+      label: {
+        flex: 5,
+        height: 50,
+        justifyContent: "center",
+      },
 });

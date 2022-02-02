@@ -28,7 +28,7 @@ const PromocodeScreen = (props) => {
     useEffect(() => {
         setLoading(true);
         var formdata = new FormData();
-        formdata.append("cart_id", cartID);
+        formdata.append("total_price", props.route.params.total_price);
 
         var requestOptions = {
           method: 'POST',
@@ -70,7 +70,8 @@ const PromocodeScreen = (props) => {
         console.log("Called")
         var formdata = new FormData();
         formdata.append("coupon_code", coupon_code);
-        formdata.append("cart_id", cartID);
+        formdata.append("user_id", props.route.params.user_id);
+        formdata.append("total_price", props.route.params.total_price);
 
         var requestOptions = {
           method: 'POST',
@@ -81,17 +82,19 @@ const PromocodeScreen = (props) => {
         fetch("http://myviristore.com/admin/api/apply_coupon", requestOptions)
           .then(response => response.json())
           .then(async result => {
-              console.log(result.data.coupon_discount)
-              var data = {discount:result.data.coupon_discount,couponName:coupon_code,couponApplied:true};
-                console.log("the final data is:- "+JSON.stringify(data))
-                await props.getCouponDiscount({discount:result.data.coupon_discount,couponName:coupon_code,couponApplied:true})
-                props.navigation.navigate("CartScreen");
+              var data = {discount:result.coupon_discount,couponName:coupon_code,couponApplied:true};
+                await props.getCouponDiscount({discount:result.coupon_discount,couponName:coupon_code,couponApplied:true})
                 setLoading(false);
+                props.navigation.goBack();
             })
           .catch(error =>{ 
             console.log('error', error)
             setLoading(false);
             });
+          
+
+
+
     }
     return(
         <ScrollView>
@@ -108,7 +111,9 @@ const PromocodeScreen = (props) => {
                     <View style={{flex:1}}>
                         <Text style={{borderWidth:1,borderColor:"grey",borderRadius:10,padding:5,textAlign:"center",marginBottom:10}}>{code.coupon_code}</Text>
                         <TouchableOpacity 
-                            onPress={() => handleSubmitCupon(code.coupon_code)}
+                            onPress={() => 
+                              handleSubmitCupon(code.coupon_code)
+                            }
                             style={{padding:7,backgroundColor:"orange",borderRadius:10}}>
                             <Text style={{textAlign:"center",color:"white"}}>Apply</Text>
                         </TouchableOpacity>

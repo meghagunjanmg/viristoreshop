@@ -344,6 +344,56 @@ const ProfileScren = (props) => {
                       </View>
                       
                   </View>
+
+                  <TouchableOpacity 
+                    onPress={() => props.navigation.push("AddressScreen")}
+                    style={{
+                      backgroundColor: '#ffffff',
+                      borderWidth: 0,
+                      color: '#FFFFFF',
+                      borderColor: '#7DE24E',
+                      height: 40,
+                      flexDirection: 'row',
+                      borderRadius: 10,
+                      marginTop: 20,
+                      margin: 10,
+                  }} >
+                    <Text style={styles.buttonTextStyle1}>My Addresses</Text>
+                  </TouchableOpacity>
+
+
+                  <TouchableOpacity 
+                    onPress={() => props.navigation.push("WalletScreen")}
+                    style={{
+                      backgroundColor: '#ffffff',
+                      borderWidth: 0,
+                      color: '#FFFFFF',
+                      borderColor: '#7DE24E',
+                      height: 40,
+                      flexDirection: 'row',
+                      borderRadius: 10,
+                      marginTop: 20,
+                      margin: 10,
+                  }} >
+                    <Text style={styles.buttonTextStyle1}>My Wallet</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity 
+                    onPress={() => props.navigation.push("OrderScreen")}
+                    style={{
+                      backgroundColor: '#ffffff',
+                      borderWidth: 0,
+                      color: '#FFFFFF',
+                      borderColor: '#7DE24E',
+                      height: 40,
+                      flexDirection: 'row',
+                      borderRadius: 10,
+                      marginTop: 20,
+                      margin: 10,
+                  }} >
+                    <Text style={styles.buttonTextStyle1}>My Order</Text>
+                  </TouchableOpacity>
+
                   {showButton?<TouchableOpacity style={{
                       backgroundColor: '#f2a900',
                       borderWidth: 0,
@@ -363,21 +413,7 @@ const ProfileScren = (props) => {
                       <Text style={styles.buttonTextStyle}>SAVE PROFILE</Text>
                   </TouchableOpacity>:
                   <View></View>}
-                     <TouchableOpacity 
-                    onPress={() => props.navigation.push("AddressScreen")}
-                    style={{
-                      backgroundColor: '#ffffff',
-                      borderWidth: 0,
-                      color: '#FFFFFF',
-                      borderColor: '#7DE24E',
-                      height: 40,
-                      flexDirection: 'row',
-                      borderRadius: 10,
-                      marginTop: 20,
-                      margin: 10,
-                  }} >
-                    <Text style={styles.buttonTextStyle1}>My Addresses</Text>
-                  </TouchableOpacity>
+                 
   
                   <TouchableOpacity 
                     onPress={() => props.navigation.navigate("Auth")}

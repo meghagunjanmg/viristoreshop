@@ -28,32 +28,32 @@ const CustomSidebarMenu = (props) => {
           />
         </View>
         <Text style={stylesSidebar.profileHeaderText}>
-          Welcome {props.user_name}! 
+          ViriStore 
         </Text>
         <AntDesign style={{right: 0, top: 20, left: 60,}} name="right" size={20} color="#FFFFFF" />
       </View>
       <View style={stylesSidebar.profileMenuBar} >
           <TouchableOpacity style={stylesSidebar.profileMenuBarStyle} onPress={() => props.navigation.navigate("OrderScreen")}>
             <Entypo name="menu" size={20} color="white" />
-            <Text style={{color: '#d8d8d8', alignItems: 'center', textAlign: 'center'}}>
+            <Text style={{color: '#ffffff', alignItems: 'center', textAlign: 'center'}}>
               My Orders
             </Text>
             </TouchableOpacity>
           <TouchableOpacity style={stylesSidebar.profileMenuBarStyle} onPress={() => props.navigation.navigate("RewardsScreen")}>
             <AntDesign name="gift" size={20} color="white" />
-            <Text style={{color: '#d8d8d8'}}>
+            <Text style={{color: '#ffffff'}}>
               Rewards
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={stylesSidebar.profileMenuBarStyle}  onPress={() => props.navigation.navigate("WalletScreen")}>
             <AntDesign name="wallet" size={20} color="white" />
-            <Text style={{color: '#d8d8d8'}}>
+            <Text style={{color: '#ffffff'}}>
               Wallet
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={stylesSidebar.profileMenuBarStyle} onPress={() => props.navigation.push("CartScreen")}>
             <AntDesign name="shoppingcart" size={20} color="white" />
-            <Text style={{color: '#d8d8d8'}}>
+            <Text style={{color: '#ffffff'}}>
               Cart
             </Text>
           </TouchableOpacity>       

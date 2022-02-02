@@ -26,9 +26,9 @@ import {_storeData, _retrieveData} from "../Storage";
 
 const Homescreen = (props) => {
   if(props.item.userdata.first_name !== undefined){
-    customTitle = `Welcome ${props.item.userdata.first_name} !!`;
+    customTitle = `Welcome ${props.item.userdata.first_name} !`;
   }
-  else   customTitle = `Welcome !!`;
+  else   customTitle = `Welcome !`;
 
   props.navigation.setOptions({title: customTitle})
  
@@ -54,6 +54,7 @@ const Homescreen = (props) => {
   var [responseProductDataArray,changeResponseProductDataArray] = useState([]);
   var [cartItemsArray,changeCartItemsArray] = useState(props.item.cartItems);
   var [reload,setReload] = useState();
+  var [storeNumber,setStoreNumber] = useState("");
   var [plusButtons,changePlusButton] = useState(false);
   const [refreshPage, setRefreshPage] = useState("");
 
@@ -176,6 +177,8 @@ const Homescreen = (props) => {
   const readUserData = async () => {
     try {
       const valueuserId = await AsyncStorage.getItem('userId');
+      storeNumber = await AsyncStorage.getItem('storeNumber');
+
       console.log("values of user id in homepage  >>> " + valueuserId); 
       if(valueuserId !== null){
         readUserDetails(valueuserId);
@@ -330,6 +333,7 @@ const Homescreen = (props) => {
     })
       .then((response) => response.json())
       .then((responseJson) => {
+        _storeData("storeNumber",responseJson.store_number)
         if(responseJson.top_selling.length < 1 && responseJson.recentselling.length < 1 && responseJson.whats_new.length < 1)
         {
           changeResponseStatus(2);
@@ -621,12 +625,12 @@ const Homescreen = (props) => {
                                   <View style={{flex: 1}}>
                                     <Text style={{flex: 1, fontSize: 17, margin: 5,color:"black",fontWeight:"bold"}}>{props.item.currency_sign} {productData.price}</Text>
                                   </View>
-                                  <View style={{flex: 1}}>
-                                    <Text style={{flex: 1, textAlign: "right",paddingBottom:5,paddingRight:5}}> 
-                                    <Text style={{textDecorationLine:"line-through"}}>{productData.mrp}</Text>
-                                      <Text style={{flex: 1, textAlign: "right", color: 'green', fontSize: 12}}>{props.item.currency_sign}{productData.mrp - productData.price} Off</Text>
-                                    </Text>
-                                  </View>
+                                  {productData.mrp == productData.price ?
+          <View/>:<View style={{flex: 1}}>
+  <Text style={{flex: 1, textAlign: "right",paddingBottom:5,paddingRight:5}}>
+      <Text style={{textDecorationLine:"line-through"}}>  {props.item.currency_sign}{productData.mrp}</Text>
+      <Text style={{flex: 1,textAlign: "right", color: 'green', fontSize: 12}}>  {props.item.currency_sign}{productData.mrp - productData.price} Off</Text>
+  </Text></View>}
                               </View>
                           </TouchableOpacity>
                         )
@@ -808,11 +812,14 @@ const Homescreen = (props) => {
                                                 {props.item.currency_sign} {trendingItem.price}
                                             </Text>
                                           </View>
-                                          <View style={{flex: 1}}>
-                                            <Text style={{flex: 1, textAlign: "right",paddingBottom:5,paddingRight:5}}>
-                                                <Text style={{textDecorationLine:"line-through"}}>{trendingItem.mrp} </Text><Text style={{flex: 1,textAlign: "right", color: 'green', fontSize: 12}}>{props.item.currency_sign}{trendingItem.mrp - trendingItem.price} Off</Text>
-                                            </Text>
-                                          </View>
+                                          {trendingItem.mrp == trendingItem.price ?
+          <View/>:<View style={{flex: 1}}>
+  <Text style={{flex: 1, textAlign: "right",paddingBottom:5,paddingRight:5}}>
+      <Text style={{textDecorationLine:"line-through"}}>  {props.item.currency_sign}{trendingItem.mrp}</Text>
+      <Text style={{flex: 1,textAlign: "right", color: 'green', fontSize: 12}}>  {props.item.currency_sign}{trendingItem.mrp - trendingItem.price} Off</Text>
+  </Text></View>
+}
+                                     
                                         </View>
                                   </TouchableOpacity>
                                   )
@@ -875,11 +882,12 @@ const Homescreen = (props) => {
                                             {props.item.currency_sign} {featuredItem.price}
                                         </Text>
                                       </View>
-                                      <View style={{flex: 1}}>
-                                        <Text style={{flex: 1, textAlign: "right",paddingBottom:5,paddingRight:5}}>
-                                        <Text style={{textDecorationLine:"line-through"}}>{featuredItem.mrp}</Text> <Text style={{flex: 1, textAlign: "right", color: 'green', fontSize: 12}}>{props.item.currency_sign}{featuredItem.mrp - featuredItem.price} Off</Text>
-                                        </Text>
-                                      </View>
+                                      {featuredItem.mrp == featuredItem.price ?
+          <View/>:<View style={{flex: 1}}>
+  <Text style={{flex: 1, textAlign: "right",paddingBottom:5,paddingRight:5}}>
+      <Text style={{textDecorationLine:"line-through"}}>  {props.item.currency_sign}{featuredItem.mrp}</Text>
+      <Text style={{flex: 1,textAlign: "right", color: 'green', fontSize: 12}}>  {props.item.currency_sign}{featuredItem.mrp - featuredItem.price} Off</Text>
+  </Text></View>}
                                     </View>
                                 </TouchableOpacity>
                             )
@@ -938,12 +946,12 @@ const Homescreen = (props) => {
                                           {props.item.currency_sign}  {recommendedItem.price}
                                       </Text>
                                     </View>
-                                    <View style={{flex: 1}}>
-                                      <Text style={{flex: 1, textAlign: "right",paddingBottom:5,paddingRight:5}}>
-                                      <Text style={{textDecorationLine:"line-through"}}>{recommendedItem.mrp}</Text>
-                                       <Text style={{flex: 1, textAlign: "right", color: 'green', fontSize: 12}}>{props.item.currency_sign}{recommendedItem.mrp - recommendedItem.price} Off</Text>
-                                      </Text>
-                                    </View>
+                                    {recommendedItem.mrp == recommendedItem.price ?
+          <View/>:<View style={{flex: 1}}>
+  <Text style={{flex: 1, textAlign: "right",paddingBottom:5,paddingRight:5}}>
+      <Text style={{textDecorationLine:"line-through"}}>  {props.item.currency_sign}{recommendedItem.mrp}</Text>
+      <Text style={{flex: 1,textAlign: "right", color: 'green', fontSize: 12}}>  {props.item.currency_sign}{recommendedItem.mrp - recommendedItem.price} Off</Text>
+  </Text></View>}
                                   </View>
                               </TouchableOpacity>
                             )
@@ -988,10 +996,10 @@ const Homescreen = (props) => {
               onPress={() =>{
                 let number = '';
                 if (Platform.OS === 'ios') {
-                number = 'telprompt:+919911966636';
+                number = 'telprompt:+91'+storeNumber;
                 }
-                else {
-                number = 'tel:+919911966636'; 
+                else {  
+                number = 'tel:+91'+storeNumber; 
                 }
                 Linking.openURL(number);
               }}
@@ -1002,7 +1010,7 @@ const Homescreen = (props) => {
             {/* Whatsapp */}
             <TouchableOpacity 
               onPress={() => {
-                let url= "whatsapp://send&phone=919911966636"
+                let url= "whatsapp://send&phone=91"+storeNumber
                 Linking.openURL(url)
                 .then(data => {
                   console.log("WhatsApp Opened successfully " + data);  //<---Success

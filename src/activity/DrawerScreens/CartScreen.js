@@ -69,6 +69,34 @@ const Cart = (props) => {
       })
       .catch(error => console.log('error', error));
   }
+
+
+
+  const userReward = () => {
+
+    var formdata1 = new FormData();
+    formdata1.append("user_id", props.item.userdata.user_id);
+    formdata1.append("cart_id", props.item.storeId);
+
+    var requestOptions = {
+      method: 'POST',
+      body: formdata1,
+      redirect: 'follow'
+    };
+    fetch("http://myviristore.com/admin/api/usereward", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        if (result.status === '1'){
+         setRewardsV(result.data.value)
+       
+        }else{
+          console.log('Please check your API.. ' + result.message);
+        }
+      })
+      .catch(error => console.log('error', error));
+  }
+
+
   const _getUserDetails = () => {
       var formdata1 = new FormData();
       formdata1.append("user_id", props.item.userdata.user_id);
@@ -313,12 +341,12 @@ const Cart = (props) => {
                   <Text>Number of Cart Items ( {cartItemsArray.length} )</Text>
                   <View style={{flexDirection:"row",marginTop:7,marginBottom:10,width:"98%",marginLeft:"auto",marginRight:"auto"}}>
                       <View style={{marginTop:10,marginBottom:10,width:"50%"}}>
-                        <Text style={{color:"black"}}>Order Amount:-</Text>
-                        <Text style={{color:"black"}}>Rewards Applied:-</Text>
-                        <Text style={{color:"black"}}>Coupon Discount:-</Text>
-                        <Text style={{color:"black"}}>Taxes Charges:-</Text>
-                        <Text style={{color:"black"}}>Delivery Charges:-</Text>
-                        <Text style={{color:"black",marginTop:2}}>Total Payable Amount:-</Text>
+                        <Text style={{color:"black"}}>Order Amount</Text>
+                        <Text style={{color:"black"}}>Rewards Applied</Text>
+                        <Text style={{color:"black"}}>Coupon Discount</Text>
+                        <Text style={{color:"black"}}>Taxes Charges</Text>
+                        <Text style={{color:"black"}}>Delivery Charges</Text>
+                        <Text style={{color:"black",marginTop:2}}>Total Payable Amount</Text>
                       </View>
                       <View style={{marginTop:10,marginBottom:10,alignItems:"flex-end",width:"50%"}}>
                         <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{subtotalPrice().toFixed(2)}</Text>
@@ -360,7 +388,7 @@ const Cart = (props) => {
                 onPress={() => {
                   if(props.item.userdata.user_id)
                   {
-                    props.navigation.navigate("PromocodeScreen")
+                    props.navigation.navigate("PromocodeScreen", {screen: "PromocodeScreen", params: {user_id: props.item.userdata.user_id, total_price: (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2)}})
                   }
                   else
                   {
@@ -467,7 +495,9 @@ const Cart = (props) => {
                             marginBottom:5}}>Year</Text>
                         </View>
                         <View style={{flexDirection:"row",width:"95%",marginLeft:"auto",marginRight:"auto"}}>
-                          <Text style={{color:"#f2a900",
+                          <Text 
+                          onPress={showDatepicker}
+                          style={{color:"#f2a900",
                             fontSize:20,
                             flex:1,
                             textAlign:"center",
@@ -477,7 +507,9 @@ const Cart = (props) => {
                             borderTopWidth:1,
                             borderTopColor:"grey",
                             borderBottomColor:"grey"}}>{('0' + (date.getDate())).slice(-2)}</Text>
-                          <Text style={{color:"#f2a900",
+                          <Text
+                          onPress={showDatepicker}
+                           style={{color:"#f2a900",
                             fontSize:20,
                             flex:1,
                             textAlign:"center",
@@ -487,7 +519,9 @@ const Cart = (props) => {
                             borderTopWidth:1,
                             borderTopColor:"grey",
                             borderBottomColor:"grey"}}>{('0' + (date.getMonth()+1)).slice(-2)}</Text>
-                          <Text style={{color:"#f2a900",
+                          <Text
+                          onPress={showDatepicker}
+                           style={{color:"#f2a900",
                             fontSize:20,
                             flex:1,
                             textAlign:"center",
@@ -566,7 +600,10 @@ const Cart = (props) => {
                             //console.log("data for getorderdetailsdata is :-"+JSON.stringify(data))
                             //props.getOrderDetailsData(data);
                             console.log(data);
-                            props.navigation.navigate("PaymentOptions", {screen: "PaymentOptions",params: {orderDetails:data, rewardsValue:rewardsValue}})
+                            if(addresss.length==0){
+                              Toast.show("Please Select Delivery Address")
+                            }
+                           else props.navigation.navigate("PaymentOptions", {screen: "PaymentOptions",params: {couponCodeData:couponCodeData,orderDetails:data, rewardsValue:rewardsValue}})
                           }
                         }
                         else

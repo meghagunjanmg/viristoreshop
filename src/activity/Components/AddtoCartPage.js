@@ -221,11 +221,15 @@ const AddtoCartPage = (props) => {
                     </View>
                     <Text style={{fontSize:15,marginTop:2,marginBottom:2}}> {selectedProductData.varients[0].quantity} {selectedProductVarients.unit}</Text>
                     <View style={{flexDirection: 'row'}}>
-                        <View style={{flexDirection: 'row', paddingRight: 20, alignItems: 'center',marginTop:5}}>
-                            <Text style={{fontSize:20}}>{props.item.currency_sign} {selectedProductVarients.price} </Text>
-                            <Text style={{textDecorationLine: 'line-through'}}>{selectedProductVarients.mrp}</Text>
+                       
 
-                        </View>
+                        {selectedProductVarients.mrp == selectedProductVarients.price ?
+          <View/>:<View style={{flex: 1}}>
+  <Text style={{paddingBottom:5,paddingRight:5}}>
+      <Text style={{textDecorationLine:"line-through"}}>  {props.item.currency_sign}{selectedProductVarients.mrp}</Text>
+      <Text style={{flex: 1, color: 'green', fontSize: 12}}>  {props.item.currency_sign}{selectedProductVarients.mrp - selectedProductVarients.price} Off</Text>
+  </Text></View>}
+                        
                         <View style={{flexDirection: 'row', position: "absolute", right: 0, borderColor: '#f2a900', borderRadius: 7, borderWidth: 1,}}>
                             {
                                 selectedProductData.qty === 0 || selectedProductData.qty === undefined || selectedProductData.qty === null ?

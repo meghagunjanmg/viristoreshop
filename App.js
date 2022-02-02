@@ -420,11 +420,12 @@ PushNotification.configure({
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
-    this.setState({
-      pushNotification: notification,
-      visible: true,
-    });
-    // process the notification
+    try {
+      this.setState({
+        pushNotification: notification,
+        visible: true,
+      });
+        // process the notification
 
     // (required) Called when a remote is received or opened, or local notification is opened
     if (notification.foreground) {
@@ -434,8 +435,10 @@ PushNotification.configure({
       });
 
       notification.finish(PushNotificationIOS.FetchResult.NoData);
-
-   } 
+    }
+    } catch (error) {
+      
+    } 
   },
 
   // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
@@ -631,6 +634,7 @@ PushNotification.configure({
           <Stack.Screen
             name="Search"
             component={SearchScreen}
+            
             options={{
               title: 'Search', //Set Header Title
               headerRight: () => ( 

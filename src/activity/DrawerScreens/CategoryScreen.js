@@ -31,7 +31,7 @@ const ExpandableComponent = ({item, onClickFunction,navigation,propValues}) => {
     // Write your code here which you want to execute on sub category selection.
     navigation.navigate("ProductScreen", {screen: "ProductsScreen", params: {title: items.title}})
   }
-
+ 
   return (
     <View style={styles.Panel_Holder}>
       {/*Header of the Expandable List Item*/}
@@ -41,9 +41,12 @@ const ExpandableComponent = ({item, onClickFunction,navigation,propValues}) => {
             onPress={onClickFunction}
             style={styles.category_View}>
               <Image
-                source={require('../../../assets/ic_launcher.png')}
-                style={styles.image}
-              />
+style={styles.image}
+    source={ item.image
+        ? {uri: 'http://myviristore.com/admin/' + item.image}                      // Use object with 'uri'
+        : require('../../../assets/ic_launcher.png')} // Or use require call directly
+/>
+  
               <Text style={styles.category_Text}>
                 {item.title}
               </Text>
@@ -58,7 +61,12 @@ const ExpandableComponent = ({item, onClickFunction,navigation,propValues}) => {
             onPress={ () => show_Selected_Category(items,propValues.latitude,propValues.longitude)}>
               <View style={{flexDirection:"row",borderBottomWidth:1,borderBottomColor:"grey"}}>
                 <Text style={[styles.text,{flex:3,alignSelf:"flex-end"}]}>{items.title} </Text>
-                <Image style={{flex:1,width:50,height:50,marginBottom:5,borderRadius:10}} source={{uri:'http://myviristore.com/admin/' + items.image}}/> 
+                <Image
+                style={{flex:1,width:50,height:50,marginBottom:5,borderRadius:10}}
+    source={items.image
+        ? {uri: 'http://myviristore.com/admin/' + items.image}                      // Use object with 'uri'
+        : require('../../../assets/ic_launcher.png')} // Or use require call directly
+/>
               </View>
           </TouchableOpacity>
         ))}

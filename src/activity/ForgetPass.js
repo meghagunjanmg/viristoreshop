@@ -6,8 +6,11 @@ import { StyleSheet,
   TextInput,
   Button,
   SafeAreaView, ScrollView,
-  TouchableOpacity } from "react-native";
+  TouchableOpacity, 
+  ToastAndroid} from "react-native";
 import { SimpleLineIcons, Entypo, FontAwesome, MaterialIcons} from '@expo/vector-icons'; 
+import Toast from 'react-native-simple-toast';
+
 
 const ForgetPass = ({ navigation }) => {
 
@@ -41,6 +44,7 @@ const ForgetPass = ({ navigation }) => {
       // If server response message same as Data Matched
       if (responseJson.status === '1') {
         console.log(responseJson.data);
+        Toast.show(responseJson.message)
         navigation.navigate("Auth")
       } else {
         console.log('Please check your phone number');

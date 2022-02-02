@@ -68,10 +68,10 @@ const Rewards = (props) => {
                 showsVerticalScrollIndicator ={false}
                 showsHorizontalScrollIndicator={false}>
                 <View>
-                    <ImageBackground source={require('../../../assets/cardbg.png')} style={styles.image}>
+              <ImageBackground source={require('../../../assets/cardbg.png')} style={styles.image}>
                         <Text style={styles.text}>Total Crystal</Text>
                         <Text style={styles.text}>{reward}</Text>
-                    </ImageBackground>
+                        </ImageBackground>
                 </View>
                 <View style={styles.achieve}>
                     <Text>Achievements</Text>

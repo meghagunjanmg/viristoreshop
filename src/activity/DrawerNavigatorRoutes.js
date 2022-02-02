@@ -32,7 +32,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Drawer = createDrawerNavigator();
-var customTitle = "Welcome !!";
+var customTitle = "Welcome !";
 var user_id = "0";
 
 
@@ -524,9 +524,9 @@ const ProfileStackNavigator1 = ({navigation}) => {
 }
 const DrawerNavigatorRoutes = (props) => {
   if(props.item.userdata.user_name !== undefined){
-    customTitle = `Welcome ${props.item.userdata.first_name} !!`;
+    customTitle = `Welcome ${props.item.userdata.first_name} !`;
   }
-  else   customTitle = `Welcome !!`;
+  else   customTitle = `Welcome !`;
 
     if(props.item.userdata.user_id)
     {
