@@ -25,6 +25,7 @@ const PromocodeScreen = (props) => {
     var [promocodeData,setPromocodeData] = useState([]);
     var cartID = "SZFA4895";
     var [loading,setLoading] = useState(false);
+    console.log(props.route.params.total_price);
     useEffect(() => {
         setLoading(true);
         var formdata = new FormData();
@@ -85,7 +86,7 @@ const PromocodeScreen = (props) => {
               var data = {discount:result.coupon_discount,couponName:coupon_code,couponApplied:true};
                 await props.getCouponDiscount({discount:result.coupon_discount,couponName:coupon_code,couponApplied:true})
                 setLoading(false);
-                props.navigation.goBack();
+                props.navigation.push("CartScreen");
             })
           .catch(error =>{ 
             console.log('error', error)

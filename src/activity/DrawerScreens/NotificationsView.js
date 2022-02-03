@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import {
+  RefreshControl,
   StyleSheet,
   Text,
   View,
@@ -16,9 +17,20 @@ import { Button } from 'react-native-paper';
 
 const NotificationsView = (props) => {
 const [data, setData] = useState([]);
+const [refreshing, setRefreshing] = useState(false);
+
 const userId="0";
 useEffect(() => {
+  getData()    
+  }, [])
 
+  const onRefresh = () => {
+    //Call the Service to get the latest data
+    getData();
+  };
+
+  const getData = () => {
+    
     let dataToSend = {user_id: props.item.userdata.user_id};
     let formBody = [];
     for (let key in dataToSend) {
@@ -40,13 +52,12 @@ useEffect(() => {
     .then((response) => response.json())
     .then((responseJson) => {
         setData(responseJson.data);
+        console.log(responseJson.data);
     })
     .catch((error) => {
         console.error(error);
     });
-    
-    
-  }, [])
+  };
 
 const deleteAll = () => {
     let dataToSend = {user_id: props.item.userdata.user_id};
@@ -78,16 +89,32 @@ const deleteAll = () => {
 }
     return (
         <View style={styles.container}>
-             <TouchableOpacity onPress={() => deleteAll()}>
+
+          {
+            data==0?
+            
+                <View style={styles.container}>
+<Text style={styles._1}> You do not have any notification</Text>
+</View>
+                
+        :
+              <View>
+                          <TouchableOpacity onPress={() => deleteAll()}>
   <Button style={{alignItems: 'flex-end'}}>
   Delete All
   </Button>
-</TouchableOpacity>
+     </TouchableOpacity>
           <FlatList 
             style={styles.notificationList} 
             enableEmptySections={true}
             data={data}
-            
+            refreshControl={
+              <RefreshControl
+                //refresh control used for the Pull to Refresh
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+              />
+            }
             keyExtractor= {(item) => {
               return item.id;
             }}
@@ -98,10 +125,11 @@ const deleteAll = () => {
                   <Text style={styles.description}>{item.noti_message}</Text>
                 </View>
               )}}/>
-        </View>
-      );
-
-              }
+              </View>
+}
+</View>
+    );       
+}
        
 const mapStateToProps = (state) => {
     // console.log("State Contains:-"+ state)
@@ -151,6 +179,22 @@ const mapStateToProps = (state) => {
         color: "#000000",
         marginLeft:10,
       },
-  });
+
   
-             
+  container: {
+    backgroundColor:'white',
+    alignItems:'center',
+    justifyContent:'center',
+    flex:1,
+    paddingTop:20 //this amount should be equal to the header height so that any items displayed inside the container will start after the absolute positioned header
+},
+ _1: {
+    backgroundColor: 'white',
+    fontSize:16,
+    alignSelf: 'center',
+    justifyContent:"flex-start",
+    alignItems: 'center',
+    position:"absolute",
+    top:0
+}    
+});

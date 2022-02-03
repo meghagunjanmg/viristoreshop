@@ -8,7 +8,8 @@ import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from "react-
 import Constants from '../Components/Constants';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Toast from 'react-native-simple-toast';
-
+import { sub } from 'react-native-reanimated';
+var subT=0;
 const Cart = (props) => {
   var [selectAll,changeSelectAll] = useState(false);
   var [couponCodeData,setCouponCodeData] = useState(props.item.couponDiscount);
@@ -30,6 +31,8 @@ const Cart = (props) => {
   var [showGreenTick,setShowGreenTick] = useState(false);
   var [rewardsv,setRewardsV] = useState("");
 
+  var [s,setS] = useState(0);
+
 
   var [radio_props,changeRadioProps] = useState([
       // {label: '08:00 - 10:00', value: "08:00 - 10:00" },
@@ -46,7 +49,16 @@ const Cart = (props) => {
     var choosenDate=`${currentDate.getFullYear()}-${('0' + (currentDate.getMonth()+1)).slice(-2)}-${('0' + (currentDate.getDate())).slice(-2)}`;
     _getTimings(choosenDate);
     _getUserDetails();
+
     getrewardvalue();
+
+    if (rewardsValue*rewardsv>=subtotalPrice()) {
+           console.log("Reward amount **")
+           setRewardsValue(subtotalPrice())
+         } else {
+          //console.log("Reward amount ")
+          setRewardsValue(rewardsValue*rewardsv)
+         }
     
      }, [])
 
@@ -62,7 +74,7 @@ const Cart = (props) => {
       .then(result => {
         if (result.status === '1'){
          setRewardsV(result.data.value)
-       
+         
         }else{
           console.log('Please check your API.. ' + result.message);
         }
@@ -344,13 +356,13 @@ const Cart = (props) => {
                         <Text style={{color:"black"}}>Order Amount</Text>
                         <Text style={{color:"black"}}>Rewards Applied</Text>
                         <Text style={{color:"black"}}>Coupon Discount</Text>
-                        <Text style={{color:"black"}}>Taxes Charges</Text>
+                        <Text style={{color:"black"}}>Taxes</Text>
                         <Text style={{color:"black"}}>Delivery Charges</Text>
                         <Text style={{color:"black",marginTop:2}}>Total Payable Amount</Text>
                       </View>
                       <View style={{marginTop:10,marginBottom:10,alignItems:"flex-end",width:"50%"}}>
                         <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{subtotalPrice().toFixed(2)}</Text>
-                        <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{rewardsValue*rewardsv}</Text>
+                        <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{rewardsValue}</Text>
                         <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{couponCodeData.discount.toFixed(2)}</Text>
                         <Text style={{color:"#7f7f7f"}}>{props.item.currency_sign}{TaxesPrice().toFixed(2)}</Text>
                         <Text style={{color:"#7f7f7f",borderBottomColor:"grey",borderBottomWidth:1}}>{props.item.currency_sign}{props.item.deliveryData.del_charge}.00</Text>
@@ -388,7 +400,7 @@ const Cart = (props) => {
                 onPress={() => {
                   if(props.item.userdata.user_id)
                   {
-                    props.navigation.navigate("PromocodeScreen", {screen: "PromocodeScreen", params: {user_id: props.item.userdata.user_id, total_price: (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2)}})
+                    props.navigation.navigate("PromocodeScreen", {screen: "PromocodeScreen", params: {user_id: props.item.userdata.user_id, total_price: subtotalPrice()}})
                   }
                   else
                   {

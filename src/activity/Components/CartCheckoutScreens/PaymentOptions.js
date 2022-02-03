@@ -14,8 +14,8 @@ const PaymentOptions = (props) =>
 {
     var [cardDetailsEntered,setCardDetailsEntered] = useState(false);
     var [isCheckedWallet,setCheckedWallet] = useState(false);
-    var [isCheckedCOD,setCheckedCOD] = useState(false);
-    var [isCheckedCard,setCheckedCard] = useState(true);
+    var [isCheckedCOD,setCheckedCOD] = useState(true);
+    var [isCheckedCard,setCheckedCard] = useState(false);
     var [cartItemsArray,changeCartItemsArray] = useState(props.item.cartItems);
     var [loading,setLoading] = useState(false);
     var [paymentMethod,setPaymentMethod] = useState("");
@@ -155,7 +155,7 @@ const PaymentOptions = (props) =>
 {
      setRew("0")
 }else{
-    setRew("1")
+    setRew(props.route.params.rewardsValue)
 }
 if(props.route.params.couponCodeData.couponName!=null)
 {
@@ -285,7 +285,6 @@ if(props.route.params.couponCodeData.couponName!=null)
         fetch("http://myviristore.com/admin/api/make_an_order", requestOptions)
           .then(response => response.json())
           .then(async (result) => {
-        
             if(result.status == 0){
                 Alert.alert(result.message);
                 Alert.alert(
@@ -296,7 +295,6 @@ if(props.route.params.couponCodeData.couponName!=null)
                     ]
                 );
             }else if(result.status == 1){
-                // console.log("Result from make an order is:-"+JSON.stringify(result.data));
                 await setCartId(result.data.cart_id);
                 var data={};
                 await props.getOrderDetailsData(data);
@@ -327,7 +325,7 @@ if(props.route.params.couponCodeData.couponName!=null)
     }
     const _renderCheckedViewWallet = () => {
         return isCheckedWallet ? (
-          <View style={[styles.radioButtonIconInnerIcon]} />
+          <View  />
         ) : null;
     }; 
 
@@ -353,9 +351,15 @@ if(props.route.params.couponCodeData.couponName!=null)
             setCheckedWallet(true);
         
             setShowPayNowButton(true)
-            if(props.item.userdata.wallet <= amount){
-                amount = (amount-props.item.userdata.wallet).toFixed(2);
-                setAmount(amount)
+            if(props.item.userdata.wallet < amount){
+                const amo = (amount - props.item.userdata.wallet).toFixed(2);
+                setAmount(amo)
+            }
+            if(props.item.userdata.wallet >= amount){
+                //amount = (amount-props.item.userdata.wallet).toFixed(2);
+                setAmount(0)
+                setCheckedCOD(false)
+                setCheckedCard(false)
             }
         }
     }
@@ -370,7 +374,7 @@ if(props.route.params.couponCodeData.couponName!=null)
             setCheckedCard(false);
             setShowPayNowButton(true);
         }
-        amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
+        const amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
         setAmount(amount)
         
     }
@@ -381,10 +385,12 @@ if(props.route.params.couponCodeData.couponName!=null)
         else {
             setCheckedWallet(false);
             setCheckedCOD(false);
-            setCheckedCard(true);
+
+            setCheckedCard(false);
+
             setShowPayNowButton(false);
         }
-        amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
+        const amount = (subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2);
         setAmount(amount)
     }
 
@@ -532,6 +538,13 @@ if(props.route.params.couponCodeData.couponName!=null)
 		return 0;
 	}
 
+   const onWalletCheck = () => {
+       if(isCheckedWallet){
+           setCheckedWallet(false)
+       }
+       else setCheckedWallet(true)
+   }
+
     const successOrder = () => {
         setSuccessModal(!successModal);
         props.navigation.replace("DrawerNavigationRoutes");
@@ -542,32 +555,37 @@ if(props.route.params.couponCodeData.couponName!=null)
             <Loader loading={loading} />
             <ScrollView>
                          
-                <TouchableOpacity {...touchWalletProps}>
+                <TouchableOpacity
+                        onPress={_renderCheckedViewWallet()}
+
+                 {...touchWalletProps}>
                 <View style={[styles.radioButtonTextContainer]}>
                         <Text style={styles.radioButtonText}>Use Wallet</Text>
                         <Text style={styles.radioButtonText}>{props.item.currency_sign} {(props.item.userdata.wallet).toFixed(2)}</Text>
                     </View>
                     <View style={[styles.checkbox]}>
         <CheckBox
+onChange={() => onWalletCheck()} 
           value={isCheckedWallet}
-          onValueChange={_renderCheckedViewWallet()}
           style={styles.checkbox}
+        
         />
       </View>    
               
                 </TouchableOpacity>
                 {
-          isCheckedWallet ?
+          amount!=0 && isCheckedWallet?
           <View>
                 <View>
-                <Text>Choose Method to Pay Remaining Amount: {props.item.currency_sign} {(subtotalPrice()+props.item.deliveryData.del_charge-couponCodeData.discount-rewardsValue+TaxesPrice()).toFixed(2)}</Text>
+                <Text>Choose Method to Pay Remaining Amount: {props.item.currency_sign} {amount}</Text>
                 </View>
               </View>
               :
               <View>
 
               </View>
-      }       
+      } 
+              
                 <TouchableOpacity {...touchCODProps}>
                     <View style={[styles.radioButtonTextContainer]}>
                         <Text style={styles.radioButtonText}>Cash on delivery</Text>
@@ -591,7 +609,8 @@ if(props.route.params.couponCodeData.couponName!=null)
                       onPress={handleCardDetails}
                     />:<Text style={{color:"#f2a900",width:"90%",marginLeft:"auto",marginRight:"auto"}}>
                         Card Details are entered, click Pay now!!
-                    </Text>}
+                    </Text>
+                    }
                     {/* <TouchableOpacity >
                         <Text style={{textAlign:"center",color:"white"}}>Enter Card Details</Text>
                     </TouchableOpacity> */}

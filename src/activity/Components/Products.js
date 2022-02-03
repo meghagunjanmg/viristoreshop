@@ -189,7 +189,7 @@ const Products = (props) => {
                             </TouchableOpacity>
                           </View> }
                           
-                          <Text style={{fontSize: 15, margin: 5, height: 25}}>{productData.product_name} </Text>
+                          <Text style={{fontSize: 15, margin: 5, height: 50}}>{productData.product_name} </Text>
                           <Text style={{ fontSize: 12, margin: 5, height: 20}}>{productData.varients[0].quantity} {productData.unit}</Text>
                           <Text style={{fontSize: 17, margin: 5,color:"black",fontWeight:"bold"}}>{props.item.currency_sign} {productData.price}</Text>
                           {productData.mrp == productData.price ?
