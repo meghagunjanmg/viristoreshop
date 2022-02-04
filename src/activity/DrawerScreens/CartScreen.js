@@ -30,6 +30,8 @@ const Cart = (props) => {
   var [showDeliveryInstructionButton,setShowDeliveryInstructionButton] = useState(true);
   var [showGreenTick,setShowGreenTick] = useState(false);
   var [rewardsv,setRewardsV] = useState("");
+  var [rewardsval,setRewardsVal] = useState("");
+
 
   var [s,setS] = useState(0);
 
@@ -42,26 +44,27 @@ const Cart = (props) => {
       // {label: '19:00 - 22:00', value: "19:00 - 22:00" }
   ]);
   useEffect(() => {
-    // Update the user data
-    console.log("props.item.top_selling");
-    console.log(props.item.homepageData.recent_selling[0].store_id);
-    var currentDate = new Date();
-    var choosenDate=`${currentDate.getFullYear()}-${('0' + (currentDate.getMonth()+1)).slice(-2)}-${('0' + (currentDate.getDate())).slice(-2)}`;
-    _getTimings(choosenDate);
-    _getUserDetails();
-
-    getrewardvalue();
-
-    if (rewardsValue*rewardsv>=subtotalPrice()) {
-           console.log("Reward amount **")
-           setRewardsValue(subtotalPrice())
-         } else {
-          //console.log("Reward amount ")
-          setRewardsValue(rewardsValue*rewardsv)
-         }
-    
+  
+       // Update the user data
+       console.log("props.item.top_selling");
+       console.log(props.item.homepageData.recent_selling[0].store_id);
+       var currentDate = new Date();
+       var choosenDate=`${currentDate.getFullYear()}-${('0' + (currentDate.getMonth()+1)).slice(-2)}-${('0' + (currentDate.getDate())).slice(-2)}`;
+       _getTimings(choosenDate);
+       _getUserDetails();
+   
+       getrewardvalue();
+   
+       if (rewardsValue*rewardsv>=subtotalPrice()) {
+              console.log("Reward amount **")
+              setRewardsValue(subtotalPrice())
+            } else {
+             //console.log("Reward amount ")
+             setRewardsValue(rewardsValue*rewardsv)
+            }
      }, [])
 
+   
   const getrewardvalue = () => {
 
     var requestOptions = {
@@ -74,7 +77,7 @@ const Cart = (props) => {
       .then(result => {
         if (result.status === '1'){
          setRewardsV(result.data.value)
-         
+        
         }else{
           console.log('Please check your API.. ' + result.message);
         }
@@ -375,7 +378,14 @@ const Cart = (props) => {
                   if(props.item.userdata.user_id)
                   {
                     setRewardsButtonShow(false);
-                    setRewardsValue(props.item.userdata.rewards)
+                    getrewardvalue()
+                    if (props.item.userdata.rewards*rewardsv>=subtotalPrice()) {
+                      console.log("Reward amount **")
+                      setRewardsValue(subtotalPrice())
+                    } else {
+                     //console.log("Reward amount ")
+                     setRewardsValue(props.item.userdata.rewards*rewardsv)
+                    }
                   }
                   else
                   {
