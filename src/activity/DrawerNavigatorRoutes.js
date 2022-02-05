@@ -45,9 +45,9 @@ const CartStackNavigator = (props) => {
             options={{
               title: 'Cart', //Set Header Title
               headerLeft: () =>(
-                <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
-                    <Text style={styles.skipText}>&#8592;</Text> 
-                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={24} color="#ffffff" />
+            </TouchableOpacity>
               ),
               headerRight: () => ( 
                 <TouchableOpacity onPress={() => 
@@ -89,9 +89,9 @@ const RewardsStackNavigator = ({navigation}) => {
             options={{
               title: 'Rewards', //Set Header Title
               headerLeft: () =>(
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.skip}>
-                    <Text style={styles.skipText}>&#8592;</Text> 
-                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+            </TouchableOpacity>
               ),
               headerRight: () => ( 
                 <TouchableOpacity onPress={() => 
@@ -132,9 +132,9 @@ const RewardStackNavigator = (props) => {
           options={{
             title: 'Rewards', //Set Header Title
             headerLeft: () =>(
-              <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
-                  <Text style={styles.skipText}>&#8592; </Text> 
-              </TouchableOpacity>
+              <TouchableOpacity onPress={() => props.navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
             ),
             headerRight: () => ( 
               <TouchableOpacity onPress={() => 
@@ -175,9 +175,9 @@ const SearchStackNavigator = (props) => {
             options={{
               title: 'Search', //Set Header Title
               headerLeft: () =>(
-                <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
-                    <Text style={styles.skipText}>&#8592;</Text> 
-                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+            </TouchableOpacity>
               ),
               headerRight: () => ( 
                 <TouchableOpacity onPress={() => 
@@ -262,9 +262,9 @@ const MainStackNavigator = (props) => {
               options={{
                 title: 'Category', //Set Header Title
                 headerLeft: () =>(
-                  <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
-                      <Text style={styles.skipText}>&#8592;</Text> 
-                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                  <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+              </TouchableOpacity>
                 ),
                 headerRight: () => ( 
                   <TouchableOpacity onPress={() => 
@@ -305,9 +305,9 @@ const MainStackNavigator = (props) => {
             options={{
               title: 'About Us', //Set Header Title
               headerLeft: () =>(
-                <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
-                    <Text style={styles.skipText}>&#8592;</Text> 
-                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+            </TouchableOpacity>
               ),
               headerRight: () => ( 
                 <TouchableOpacity onPress={() => 
@@ -347,9 +347,9 @@ const NotificationStackNavigator = (props) => {
           options={{
             title: 'Notifications', //Set Header Title
             headerLeft: () =>(
-              <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
-                  <Text style={styles.skipText}>&#8592;</Text> 
-              </TouchableOpacity>
+              <TouchableOpacity onPress={() => props.navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
             ),
             headerRight: () => ( 
               <TouchableOpacity onPress={() => 
@@ -390,9 +390,9 @@ const ProfileStackNavigator = (props) => {
           options={{
             title: 'Profile', //Set Header Title
             headerLeft: () =>(
-              <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
-                  <Text style={styles.skipText}>&#8592;</Text> 
-              </TouchableOpacity>
+              <TouchableOpacity onPress={() => props.navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
             ),
             // headerRight: () => ( 
             //   <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
@@ -421,9 +421,9 @@ const TermsConditionStackNavigator = (props) => {
             options={{
               title: 'Terms and Conditions', //Set Header Title
               headerLeft: () =>(
-                <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.skip}>
-                    <Text style={styles.skipText}>&#8592;</Text> 
-                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+            </TouchableOpacity>
               ),
               headerRight: () => ( 
                 <TouchableOpacity onPress={() => 
@@ -506,9 +506,9 @@ const ProfileStackNavigator1 = ({navigation}) => {
           options={{
             title: 'Profile', //Set Header Title
             headerLeft: () =>(
-              <TouchableOpacity onPress={() => navigation.goBack()} style={styles.skip}>
-                  <Text style={styles.skipText}>&#8592; </Text> 
-              </TouchableOpacity>
+              <TouchableOpacity onPress={() => props.navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
             ),
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color

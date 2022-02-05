@@ -64,6 +64,12 @@ const CartStackNavigator = ({navigation}) => {
                   <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#2C2A2A" />
               </TouchableOpacity>
             ), //Set Header right icon
+              headerLeft: () =>(
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+            </TouchableOpacity>
+              ),
+            
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
@@ -76,7 +82,7 @@ const CartStackNavigator = ({navigation}) => {
       </Stack.Navigator>
   );
 }
-const CheckOutScreenStackNavigator = () => {
+const CheckOutScreenStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator>
         <Stack.Screen
@@ -87,6 +93,11 @@ const CheckOutScreenStackNavigator = () => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -96,7 +107,7 @@ const CheckOutScreenStackNavigator = () => {
       </Stack.Navigator>
   );
 }
-const WalletStackNavigator = () => {
+const WalletStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator>
         <Stack.Screen
@@ -107,6 +118,11 @@ const WalletStackNavigator = () => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -117,7 +133,7 @@ const WalletStackNavigator = () => {
   );
 }
 
-const OrderStackNavigator = () => {
+const OrderStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator>
         <Stack.Screen
@@ -128,6 +144,11 @@ const OrderStackNavigator = () => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -137,7 +158,7 @@ const OrderStackNavigator = () => {
       </Stack.Navigator>
   );
 }
-const RewardsScreenStackNavigator = () => {
+const RewardsScreenStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator>
         <Stack.Screen
@@ -148,6 +169,11 @@ const RewardsScreenStackNavigator = () => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -157,7 +183,7 @@ const RewardsScreenStackNavigator = () => {
       </Stack.Navigator>
   );
 }
-const OrderCancelPageStackNavigator = () => {
+const OrderCancelPageStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator>
         <Stack.Screen
@@ -168,6 +194,11 @@ const OrderCancelPageStackNavigator = () => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -177,7 +208,7 @@ const OrderCancelPageStackNavigator = () => {
       </Stack.Navigator>
   );
 }
-const AddressScreenStackNavigator = () => {
+const AddressScreenStackNavigator = ({navigation}) => {
   return (
     <Stack.Navigator>
         <Stack.Screen
@@ -188,6 +219,11 @@ const AddressScreenStackNavigator = () => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -207,7 +243,12 @@ const MapComponentStackNavigator = ({navigation}) => {
             title: 'Map', //Set Header Title
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
-            },
+            }, headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
+
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -228,6 +269,11 @@ const ProfileStackNavigator = ({navigation}) => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -248,6 +294,11 @@ const PaymentOptionsStackNavigator = ({navigation}) => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -282,6 +333,11 @@ const ProductsStackNavigator = ({navigation}) => {
                 <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#2C2A2A" />
               </TouchableOpacity>
             ), //Set Header right icon
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
@@ -305,6 +361,11 @@ const PromocodeScreenStackNavigator = ({navigation}) => {
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerTintColor: '#fff', //Set Header text color
             headerTitleStyle: {
               fontWeight: 'normal', //Set Header text style
@@ -313,6 +374,9 @@ const PromocodeScreenStackNavigator = ({navigation}) => {
         />
       </Stack.Navigator>
   );
+
+
+  
 }
 const Auth = () => {
   return (
@@ -368,6 +432,11 @@ const OrderDetailsStackNavigator = ({navigation}) => {
                 <FontAwesome style={{padding: 7, marginRight: 10,}} name="user-circle" size={24} color="#2C2A2A" />
               </TouchableOpacity>
             ), //Set Header right icon
+            headerLeft: () =>(
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+          </TouchableOpacity>
+            ),
             headerStyle: {
               backgroundColor: '#f2a900', //Set Header color
             },
@@ -393,6 +462,13 @@ const App = (props) => {
     console.log("For testing purpose end");
 
     firebasenotification()
+
+    PushNotification.createChannel({
+      channelId: "my-channel", // (required)
+      channelName: "My channel", // (required)
+   },
+   (created) => console.log(`CreateChannel returned '${created}'`)
+   );
     
       const unsubscribe = messaging().onMessage(async remoteMessage => {
         PushNotification.localNotification({
@@ -425,11 +501,12 @@ PushNotification.configure({
         pushNotification: notification,
         visible: true,
       });
-        // process the notification
+    
 
-    // (required) Called when a remote is received or opened, or local notification is opened
-    if (notification.foreground) {
+     if (notification.foreground) {
       PushNotification.localNotification({
+        //channelId : 1,
+        channelId: "channel-id",
         title:notification.title,
         message:notification.message
       });
@@ -437,7 +514,6 @@ PushNotification.configure({
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     }
     } catch (error) {
-      
     } 
   },
 
@@ -635,7 +711,7 @@ PushNotification.configure({
             name="Search"
             component={SearchScreen}
             
-            options={{
+            options={({navigation}) => ({
               title: 'Search', //Set Header Title
               headerRight: () => ( 
                 <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
@@ -645,16 +721,21 @@ PushNotification.configure({
               headerStyle: {
                 backgroundColor: '#f2a900', //Set Header color
               },
+              headerLeft: () =>(
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+            </TouchableOpacity>
+              ),
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
                 fontWeight: 'normal', //Set Header text style
               },
-            }}/>
+            })}/>
             {/* Product navigator */}
           <Stack.Screen
             name="Product"
             component={ProductsScreen}
-            options={{
+            options={({navigation}) => ({
               title: 'Products', //Set Header Title
               headerRight: () => ( 
                 <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
@@ -664,17 +745,22 @@ PushNotification.configure({
               headerStyle: {
                 backgroundColor: '#f2a900', //Set Header color
               },
+              headerLeft: () =>(
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+            </TouchableOpacity>
+              ),
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
                 fontWeight: 'normal', //Set Header text style
               },
-            }}
+            })}
           />
           {/* Product navigator */}
           <Stack.Screen
             name="PaymentStripe"
             component={PaymentStripe}
-            options={{
+            options={({navigation}) => ({
               title: 'Payment Options', //Set Header Title
               headerStyle: {
                 backgroundColor: '#f2a900', //Set Header color
@@ -683,37 +769,54 @@ PushNotification.configure({
               headerTitleStyle: {
                 fontWeight: 'normal', //Set Header text style
               },
-            }}
+              headerLeft: () =>(
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={26} color="#ffffff" />
+            </TouchableOpacity>
+              ),
+            })}
           />
           {/* AddtoCart page navigator */}
           <Stack.Screen
             name="AddtoCartPage"
             component={AddtoCartPage}
-            options={{
-              title: 'Product', //Set Header Title
+            options={({navigation}) => ({
+              title: 'Products', //Set Header Title
               headerStyle: {
                 backgroundColor: '#f2a900', //Set Header color
               },
+              headerLeft: () =>(
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={24} color="#ffffff" />
+            </TouchableOpacity>
+              ),
+
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
                 fontWeight: 'normal', //Set Header text style
               },
-            }}
+            })}
           />
           {/* Add address page navigator */}
           <Stack.Screen
             name="AddAddressScreen"
             component={AddAddressScreen}
-            options={{
+            options={({navigation}) => ({
               title: 'Add or Update Address', //Set Header Title
               headerStyle: {
                 backgroundColor: '#f2a900', //Set Header color
               },
+              headerLeft: () =>(
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <FontAwesome style={{padding: 7, marginRight: 10,}} name="arrow-left" size={24} color="#ffffff" />
+            </TouchableOpacity>
+              ),
+
               headerTintColor: '#fff', //Set Header text color
               headerTitleStyle: {
                 fontWeight: 'normal', //Set Header text style
               },
-            }}
+            })}
           />
                
           {/* Add payment option page navigator */}

@@ -14,7 +14,7 @@ const PaymentOptions = (props) =>
 {
     var [cardDetailsEntered,setCardDetailsEntered] = useState(false);
     var [isCheckedWallet,setCheckedWallet] = useState(false);
-    var [isCheckedCOD,setCheckedCOD] = useState(true);
+    var [isCheckedCOD,setCheckedCOD] = useState(false);
     var [isCheckedCard,setCheckedCard] = useState(false);
     var [cartItemsArray,changeCartItemsArray] = useState(props.item.cartItems);
     var [loading,setLoading] = useState(false);
@@ -360,6 +360,7 @@ if(props.route.params.couponCodeData.couponName!=null)
                 setAmount(0)
                 setCheckedCOD(false)
                 setCheckedCard(false)
+                setShowPayNowButton(true);
             }
         }
     }
@@ -539,15 +540,36 @@ if(props.route.params.couponCodeData.couponName!=null)
 	}
 
    const onWalletCheck = () => {
-       if(isCheckedWallet){
-           setCheckedWallet(false)
+ 
+       if(isCheckedWallet)
+       {
+           setCheckedWallet(false);
        }
-       else setCheckedWallet(true)
+   else {
+       setCheckedWallet(true);
+   
+       setShowPayNowButton(true)
+       if(props.item.userdata.wallet < amount){
+           const amo = (amount - props.item.userdata.wallet).toFixed(2);
+           setAmount(amo)
+       }
+       if(props.item.userdata.wallet >= amount){
+           //amount = (amount-props.item.userdata.wallet).toFixed(2);
+           setAmount(0)
+           setCheckedCOD(false)
+           setCheckedCard(false)
+           setShowPayNowButton(true);
+       }
+   }
+
    }
 
     const successOrder = () => {
         setSuccessModal(!successModal);
-        props.navigation.replace("DrawerNavigationRoutes");
+        props.navigation.reset({
+            index: 0,
+            routes: [{name: 'DrawerNavigationRoutes'}],
+          });
     }
 
     return(
@@ -704,7 +726,7 @@ onChange={() => onWalletCheck()}
                     <Text style={{marginLeft:10,fontWeight:"bold",fontSize:15,color:"grey"}}>{props.item.currency_sign}{amount}</Text>
                 </View>
 
-                {showPayNowButton?<TouchableOpacity
+                {isCheckedWallet || isCheckedCOD || isCheckedCard ?<TouchableOpacity
                     style={styles.paynowButton} onPress={handlePayNowButton}>
                     <Text style={{color:"white", fontWeight:"bold"}}>PAY NOW</Text>
                 </TouchableOpacity>:

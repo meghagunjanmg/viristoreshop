@@ -30,14 +30,17 @@ const Rewards = (props) => {
 
 
     useEffect(() => {
-      
+      if(data!==null)
+    {  
       getData(); 
-      userdata();
-     
-     
-      }, [])
+    }
+      }, []);
 
-      
+      useEffect(() => {
+        userdata()
+        }, [data]);
+  
+
       const onRefresh = () => {
        getData()
        userdata()
@@ -64,6 +67,7 @@ const Rewards = (props) => {
         })
         .then((response) => response.json())
         .then((responseJson) => {
+          if(responseJson.status==="1"){
             setUserRewards(responseJson.rewards)
             const rew = [];
             for (let i=0; i < data.length; i++) {
@@ -80,7 +84,7 @@ const Rewards = (props) => {
               }
             }
           }    
-          
+        }
         })
         .catch((error) => {
             console.error(error);

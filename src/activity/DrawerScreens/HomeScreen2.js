@@ -1073,46 +1073,32 @@ const Homescreen = (props) => {
   {
     return(
       <SafeAreaView style={styles.noItemsContainer}>
-        <View style={styles.items}>
-            <Text style={styles.itemstext}>
-              We are not delivering in this Area.
-            </Text>
-          </View>
-          
-          <View style={styles.rechargebutton}> 
-            <TouchableOpacity>
-              <Text style={styles.textRecharge}>CHANGE YOUR LOCATION</Text>
-            </TouchableOpacity>
+      <View style={styles.items}>
+          <Text style={styles.itemstext}>
+            We are not delivering in this Area.
+          </Text>
         </View>
-      </SafeAreaView>
+        
+        <View style={styles.rechargebutton}> 
+          <TouchableOpacity onPress={() => {
+            console.log(latitude+" "+longitude)
+            try {
+              navigation.navigate('MapComponent', {screen: "MapComponent", params: {latitude:latitude,longitude:longitude}})
+            } catch (error) {
+              console.log(error)
+            }
+          }}
+>
+            <Text style={styles.textRecharge}>CHANGE YOUR LOCATION</Text>
+          </TouchableOpacity>
+      </View>
+    </SafeAreaView>
     );
   }
   else{
     return (
-   // <View><Text style={{textAlign:"center",width:"90%",marginLeft:"auto",marginRight:"auto",marginTop:300,color:"grey"}}>We are unable to connect to our service, Please check your Internet Connection or try again later!!</Text>{/* {_getHomePageDataAsync()} */}</View>
-      
-        <SafeAreaView style={styles.noItemsContainer}>
-          <View style={styles.items}>
-              <Text style={styles.itemstext}>
-                We are not delivering in this Area.
-              </Text>
-            </View>
-            
-            <View style={styles.rechargebutton}> 
-              <TouchableOpacity onPress={() => {
-                console.log(latitude+" "+longitude)
-                try {
-                  navigation.navigate('MapComponent', {screen: "MapComponent", params: {latitude:latitude,longitude:longitude}})
-                } catch (error) {
-                  console.log(error)
-                }
-              }}
->
-                <Text style={styles.textRecharge}>CHANGE YOUR LOCATION</Text>
-              </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      
+    <View><Text style={{textAlign:"center",width:"90%",marginLeft:"auto",marginRight:"auto",marginTop:300,color:"grey"}}>We are unable to connect to our service, Please check your Internet Connection or try again later!!</Text>{/* {_getHomePageDataAsync()} */}</View>
+
     )
   }
   
